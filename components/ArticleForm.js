@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { useFormik } from "formik";
 
 export function ArticleForm() {
   const [article, setArticle] = useState({
@@ -10,22 +11,29 @@ export function ArticleForm() {
     price: 0,
   });
 
+  const formik = useFormik({
+    initialValues: {
+      articletitle: "",
+      description: "",
+      price: 0,
+    },
+    onSubmit: (values) => handleFormSubmit(values),
+  });
+
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async (values) => {
+    console.log(values);
+    // e.preventDefault();
 
     try {
       if (router.query.id) {
         //console.log("update");
-        const res = await axios.put(
-          "/api/articles/" + router.query.id,
-          article
-        );
+        const res = await axios.put("/api/articles/" + router.query.id, values);
         //console.log(res);
         toast.success("Article actualitzat");
       } else {
-        const res = await axios.post("/api/articles", article);
+        const res = await axios.post("/api/articles", values);
         //console.log(res);
         toast.success("Article enregistrat");
       }
@@ -55,7 +63,7 @@ export function ArticleForm() {
   return (
     <div className="w-full max-w-xs">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
         className="bg-white shadow-md rounded px-8 py-6 pb-8 mb-4"
       >
         <div className="mb-4">
@@ -68,9 +76,9 @@ export function ArticleForm() {
           <input
             type="text"
             name="articletitle"
-            onChange={handleChange}
+            onChange={formik.handleChange}
             className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={article.articletitle}
+            value={formik.values.articletitle}
           />
         </div>
         <div className="mb-4">
@@ -84,9 +92,9 @@ export function ArticleForm() {
             type="text"
             name="price"
             id="price"
-            onChange={handleChange}
+            onChange={formik.handleChange}
             className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={article.price}
+            value={formik.values.price}
           />
         </div>
 
@@ -100,13 +108,16 @@ export function ArticleForm() {
           <textarea
             name="description"
             rows="2"
-            onChange={handleChange}
+            onChange={formik.handleChange}
             className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={article.description}
+            value={formik.values.description}
           ></textarea>
         </div>
 
-        <button className="bg-emerald-500 hover:bg-emerald-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline font-bold text-white">
+        <button
+          type="submit"
+          className="bg-emerald-500 hover:bg-emerald-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline font-bold text-white"
+        >
           {router.query.id ? "Editar article" : "Crear article"}
         </button>
       </form>
