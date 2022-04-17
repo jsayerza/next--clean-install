@@ -1,6 +1,9 @@
+import { useUser } from "context/authContext";
 import Link from "next/link";
 
 export function Navbar() {
+  const { user, handleGoogleLogin } = useUser();
+
   return (
     <nav className="bg-emerald-600 border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
@@ -127,6 +130,24 @@ export function Navbar() {
                   Sobre Escolapop
                 </a>
               </Link>
+            </li>
+            <li>
+              {user ? (
+                <div className="rounded-full">
+                  <img
+                    src={user.avatar}
+                    alt="avatar image"
+                    className="h-10 w-10"
+                  />
+                </div>
+              ) : (
+                <button
+                  onClick={handleGoogleLogin}
+                  className="block py-2 px-4 text-white border-white rounded "
+                >
+                  Login
+                </button>
+              )}
             </li>
           </ul>
         </div>
