@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
+
 export function ArticleForm() {
+
   const [article, setArticle] = useState({
     articletitle: "",
     description: "",
@@ -40,7 +42,10 @@ export function ArticleForm() {
     setArticle({ ...article, [name]: value });
   };
 
+
+
   useEffect(() => {
+
     const getArticle = async () => {
       const { data } = await axios.get("/api/articles/" + router.query.id);
       setArticle(data);
