@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
+import { uploadImage } from "../firebase/client";
 
 export function ArticleForm() {
   const [article, setArticle] = useState({
@@ -11,17 +12,33 @@ export function ArticleForm() {
     price: 0,
   });
 
+  const [image, setImage] = useState(null);
+  const [articleCategories, setArticleCategories] = useState([]);
+
+  const fileRef = useRef(null);
+
   const formik = useFormik({
     initialValues: {
       articletitle: "",
       description: "",
       price: 0,
+      articlecategoryid: "",
     },
     onSubmit: (values) => handleFormSubmit(values),
   });
 
   const router = useRouter();
 
+  const handleFileUpload = (event) => {
+    console.log(event.target.files[0]);
+    const uploadedImage = uploadImage(event.target.files[0]);
+  };
+
+  /*   const handleFileUploadButton = (e) => {
+    e.preventDefault();
+    fileRef.current.click();
+  };
+ */
   const handleFormSubmit = async (values) => {
     console.log(values);
     // e.preventDefault();
@@ -51,6 +68,8 @@ export function ArticleForm() {
   useEffect(() => {
     const getArticle = async () => {
       const { data } = await axios.get("/api/articles/" + router.query.id);
+      const { data: categories } = await axios.get("/api/articles/categories");
+      setArticleCategories(categories);
       setArticle(data);
     };
 
@@ -96,6 +115,47 @@ export function ArticleForm() {
             className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={formik.values.price}
           />
+        </div>
+
+        <div className="mb-4">
+          <input
+            ref={fileRef}
+            type="file"
+            accept="images/*"
+            onChange={handleFileUpload}
+            // style={{ display: "none" }}
+            multiple={false}
+          />
+          {/*           <button
+            onClick={(e) => {
+              e.preventDefault();
+              fileRef.current.click();
+            }}
+          >
+            Upload File
+          </button> */}
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="articlecategoryid" style={{ display: "block" }}>
+            Color
+          </label>
+          <select
+            name="categories"
+            value={formik.values.articlecategoryid}
+            onChange={formik.handleChange}
+            style={{ display: "block" }}
+          >
+            {articleCategories.map((category) => (
+              <option
+                key={category.articlecategoryid}
+                value=""
+                label={category.articlecategory}
+              >
+                {category.articlecategory}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-4">
