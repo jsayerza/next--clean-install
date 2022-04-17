@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
   signOut,
@@ -63,4 +64,16 @@ export const firebaseLogout = () => {
     .catch((error) => {
       console.error(error);
     });
+};
+
+const storage = getStorage(app);
+
+export const uploadImage = (file) => {
+  const reference = ref(storage, `images/${file.name}`);
+  // const ref = app.storage().ref(`images/${file.name}`);
+  uploadBytes(reference, file).then((snapshot) => {
+    console.log("Uploaded a blob or file!");
+  });
+
+  console.log(reference.name);
 };
