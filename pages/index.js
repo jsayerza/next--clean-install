@@ -9,7 +9,7 @@ function HomePage({ articles }) {
   const { user } = useUser();
   console.log("user: ", user);
 
-  /*   const renderArticles = () => {
+    const renderArticles = () => {
     if (articles.length === 0)
       return (
         <h1 className="text-center text-2xl font-bold">No hi ha articles</h1>
@@ -18,10 +18,9 @@ function HomePage({ articles }) {
     return articles.map((article) => (
       <ArticleCard key={article.id} article={article} />
     ));
-  }; */
+  };
 
-  const renderArticles = () => {
-    console.log("articles.length: ", articles.length);
+/*     console.log("articles.length: ", articles.length);
     {!articles.length > 0 ? (
       <h1 className="text-center text-2xl font-bold">No hi ha articles</h1>
     ) : (
@@ -29,9 +28,7 @@ function HomePage({ articles }) {
         <ArticleCard key={article.articleid} article={article} />
       ))
     )}
-
-  }
-
+ */
 
   return (
     <Layout>
@@ -61,29 +58,12 @@ export const getServerSideProps = async (context) => {
  */
 
   const {data: articles} = await axios.get(HOST_SV + PORT_SV + "/api/articles")
-  console.log(articles);
-
-  const {data: articleCategory} = await axios.get(HOST_SV + PORT_SV + "/api/tables", {
-    params: {
-      table: "articleCategory"
-    }
-  })
-  //console.log(articleCategory);
-  
-  const {data: articleStatus} = await axios.get(HOST_SV + PORT_SV + "/api/tables", {
-    params: {
-      table: "articleStatus"
-    }
-  })
-  //console.log(articleStatus);
-
+  //console.log(articles);
 
 
   return {
     props: {
       articles,
-      articleCategory,
-      articleStatus,
     },
   };
 };

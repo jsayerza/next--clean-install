@@ -22,7 +22,7 @@ const getArticles = async (req, res) => {
 };
 
 const saveArticle = async (req, res) => {
-  const { articletitle, description, price } = req.body;
+  const { articletitle, articlecategoryid, description, price } = req.body;
 
   try {
     //console.log("creant un article")
@@ -34,13 +34,14 @@ const saveArticle = async (req, res) => {
     }
     const [result] = await pool.query("INSERT INTO article SET ?", {
       articletitle,
+      articlecategoryid,
       description,
       price,
     });
     //console.log(result);
     return res
       .status(200)
-      .json({ articletitle, description, price, articleid: result.insertId });
+      .json({ articletitle, articlecategoryid, description, price, articleid: result.insertId });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

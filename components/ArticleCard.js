@@ -6,6 +6,7 @@ export function ArticleCard({article}) {
     <a>
       <div  className="border border-gray-200 shadow-md p-6">
         <h1>{article.articletitle}</h1>
+        <p>{article.articlecategoryid}</p>
         <p>{article.description}</p>
         <p>{article.price}</p>
       </div>

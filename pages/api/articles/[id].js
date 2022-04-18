@@ -1,6 +1,7 @@
 import { pool } from "../../../config/db";
 
 export default async function handler(req, res) {
+  
   //console.log(req.method);
 
   switch (req.method) {
@@ -41,11 +42,11 @@ const deleteArticle = async (req, res) => {
 
 const updateArticle = async (req, res) => {
   const { id } = req.query;
-  const { articletitle, description, price } = req.body;
+  const { articletitle, articlecategoryid, description, price } = req.body;
   try {
     await pool.query(
-      "UPDATE article SET articletitle = ?, description = ?, price = ? WHERE articleid = ?",
-      [articletitle, description, price, id]
+      "UPDATE article SET articletitle = ?, articlecategoryid = ?, description = ?, price = ? WHERE articleid = ?",
+      [articletitle, articlecategoryid, description, price, id]
     );
     return res.status(204).json();
   } catch (error) {
