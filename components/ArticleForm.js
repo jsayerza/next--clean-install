@@ -67,7 +67,8 @@ export function ArticleForm() {
         //console.log("update/res: ", res);
         toast.success("Article actualitzat");
       } else {
-        //console.log("add");
+        console.log("add");
+        console.log("add/article: ", article);
         /* const res = await axios.post("/api/articles", values); */
         const res = await axios.post("/api/articles", article);
         //console.log("add/res: ", res);

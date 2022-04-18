@@ -22,26 +22,28 @@ const getArticles = async (req, res) => {
 };
 
 const saveArticle = async (req, res) => {
-  const { articletitle, articlecategoryid, description, price } = req.body;
+  const { articletitle, articlecategoryid, articlestatusid, description, price } = req.body;
 
   try {
-    //console.log("creant un article")
-    //console.log(req.body);
+    console.log("creant un article")
+    console.log(req.body);
 
-    if (req.files.image) {
+/*     if (req.files.image) {
       const result = await uploadImage(req.files.image.tempFilepath);
       console.log(result);
     }
+ */    
     const [result] = await pool.query("INSERT INTO article SET ?", {
       articletitle,
       articlecategoryid,
+      articlestatusid,
       description,
       price,
     });
-    //console.log(result);
+    console.log("saveArticle/result: ", result);
     return res
       .status(200)
-      .json({ articletitle, articlecategoryid, description, price, articleid: result.insertId });
+      .json({ articletitle, articlecategoryid, articlestatusid, description, price, articleid: result.insertId });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
