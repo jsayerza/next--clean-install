@@ -25,7 +25,7 @@ function ArticleView({article}) {
     return (
         <Layout>
             <h1>{article.articletitle}</h1>
-            <p>{article.articlecategoryid}</p>
+            <p>{article.articlecategory} ({article.articlecategoryid})</p>
             <p>{article.description}</p>
             <p>{article.price}</p>
 

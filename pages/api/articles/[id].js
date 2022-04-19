@@ -20,7 +20,8 @@ const getArticle = async (req, res) => {
   try {
     const { id } = req.query;
     const [result] = await pool.query(
-      "SELECT * FROM article WHERE articleid = ?",
+      /* "SELECT * FROM article WHERE articleid = ?", */
+      "SELECT * FROM v_article WHERE articleid = ?",
       [id]
     );
     return res.status(200).json(result[0]);
