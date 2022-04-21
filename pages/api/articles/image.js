@@ -22,8 +22,8 @@ const getImage = async (req, res) => {
 
 const saveImage = async (req, res) => {
   try {
-    console.log("req.body: ", req.body)
-    const { url, articleId } = req.body;
+    console.log("req.body: ", req.body);
+    const { articleId, url } = req.body;
     const [result] = await pool.query("INSERT INTO articleimage SET ?", {
       articleid: articleId,
       imageurl: url,
