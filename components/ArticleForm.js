@@ -6,21 +6,34 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { getDownloadURL } from "firebase/storage";
 
-import { HOST_SV, PORT_SV } from "config/config";
 import { uploadImage } from "../firebase/client";
 import { useUser } from "context/authContext";
+import { HOST_SV, PORT_SV } from "config/config";
 
 
 export function ArticleForm({ articleUpdateId = null }) {
 
-  let isAddMode = true;
+  console.log("articleUpdateId: ", articleUpdateId)
 
-  const [article, setArticle] = useState({
+  //const fileRef = useRef(null);
+  const router = useRouter();
+  const { user } = useUser();
+
+  let isAddMode = true;
+  
+/*   const [article, setArticle] = useState({
     articletitle: "",
     description: "",
     articlecategoryid: "",
     articlestatusid: "",
     price: 0,
+  });
+ */
+
+  const [updateArticle, setUpdateArticle] = useState({
+    articletitle: "",
+    price: "",
+    description: "",
   });
 
   const [urlImg, setUrlImg] = useState("");
@@ -29,9 +42,6 @@ export function ArticleForm({ articleUpdateId = null }) {
   const [articleCategory, setArticleCategory] = useState([]);
   const [articleStatus, setArticleStatus] = useState([]);
 
-  const fileRef = useRef(null);
-  const router = useRouter();
-  const { user } = useUser();
 
   /*   const handleFileUploadButton = (e) => {
     e.preventDefault();
@@ -292,6 +302,10 @@ export function ArticleForm({ articleUpdateId = null }) {
           </Form>
         )}
       </Formik>
+    </div>
+  );
+}
+
 
 {/*       <form
         onSubmit={handleFormSubmit} 
@@ -387,6 +401,3 @@ export function ArticleForm({ articleUpdateId = null }) {
         </button>
       </form>
  */}
-    </div>
-  );
-}

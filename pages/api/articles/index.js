@@ -15,7 +15,7 @@ const getArticles = async (req, res) => {
   try {
     /* const [result] = await pool.query("SELECT * FROM article"); */
     const [result] = await pool.query("SELECT * FROM v_article");
-    console.log(result);
+    //console.log(result);
     return res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({ error });
@@ -26,8 +26,8 @@ const saveArticle = async (req, res) => {
   const { articletitle, articlecategoryid, articlestatusid, description, price } = req.body;
 
   try {
-    console.log("creant un article")
-    console.log(req.body);
+    //console.log("creant un article")
+    //console.log(req.body);
 
 /*     if (req.files.image) {
       const result = await uploadImage(req.files.image.tempFilepath);
@@ -41,7 +41,7 @@ const saveArticle = async (req, res) => {
       description,
       price,
     });
-    console.log("saveArticle/result: ", result);
+    //console.log("saveArticle/result: ", result);
     return res
       .status(200)
       .json({ articletitle, articlecategoryid, articlestatusid, description, price, articleid: result.insertId });

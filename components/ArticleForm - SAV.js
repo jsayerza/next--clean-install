@@ -112,7 +112,7 @@ export function ArticleForm() {
     const getArticle = async () => {
       const { data } = await axios.get("/api/articles/" + router.query.id);
       setArticle(data);
-      console.log("getArticle/data: ", data);
+      //console.log("getArticle/data: ", data);
       //const { data: categories } = await axios.get("/api/articles/categories");
       //setArticleCategories(categories);
     };

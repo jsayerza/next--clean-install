@@ -35,7 +35,11 @@ function ArticleView({article}) {
                 Elimina article
             </button>
             <button className="bg-gray-500 hover:bg-gray-800 text-white rounded ml-2 px-5 py-2"
-                onClick={() => router.push("/articles/edit/" + article.articleid)}
+                onClick={() => {
+                    //console.log("ArticleView/article.articleid: ", article.articleid)
+                    router.push("/articles/edit/" + article.articleid)
+                }
+                }
             >
                 Edita article
             </button>
