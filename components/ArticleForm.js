@@ -10,18 +10,16 @@ import { uploadImage } from "../firebase/client";
 import { useUser } from "context/authContext";
 import { HOST_SV, PORT_SV } from "config/config";
 
-
 export function ArticleForm({ articleUpdateId = null }) {
-
-  console.log("articleUpdateId: ", articleUpdateId)
+  console.log("articleUpdateId: ", articleUpdateId);
 
   //const fileRef = useRef(null);
   const router = useRouter();
   const { user } = useUser();
 
   let isAddMode = true;
-  
-/*   const [article, setArticle] = useState({
+
+  /*   const [article, setArticle] = useState({
     articletitle: "",
     description: "",
     articlecategoryid: "",
@@ -41,7 +39,6 @@ export function ArticleForm({ articleUpdateId = null }) {
   const [articleCategories, setArticleCategories] = useState([]);
   const [articleCategory, setArticleCategory] = useState([]);
   const [articleStatus, setArticleStatus] = useState([]);
-
 
   /*   const handleFileUploadButton = (e) => {
     e.preventDefault();
@@ -67,7 +64,7 @@ export function ArticleForm({ articleUpdateId = null }) {
     );
   };
 
-/*   const handleFormSubmit = async (e) => {
+  /*   const handleFormSubmit = async (e) => {
     //toast.success("Hola handleFormSubmit");
     //console.log("handleFormSubmit/e", e);
     e.preventDefault();
@@ -94,33 +91,38 @@ export function ArticleForm({ articleUpdateId = null }) {
   };
  */
 
-/*   const handleChange = ({ target: { name, value } }) => {
+  /*   const handleChange = ({ target: { name, value } }) => {
     console.log(name, value)
     setArticle({ ...article, [name]: value });
   };
  */
 
-
   const getTables = async () => {
     //console.log("getTables")
-    const {data: articleCategory} = await axios.get(HOST_SV + PORT_SV + "/api/tables", {
-      params: {
-        table: "articleCategory"
+    const { data: articleCategory } = await axios.get(
+      HOST_SV + PORT_SV + "/api/tables",
+      {
+        params: {
+          table: "articleCategory",
+        },
       }
-    })
+    );
     //console.log("articleCategory: ", articleCategory);
     setArticleCategory(articleCategory);
-    
-    const {data: articleStatus} = await axios.get(HOST_SV + PORT_SV + "/api/tables", {
-      params: {
-        table: "articleStatus"
+
+    const { data: articleStatus } = await axios.get(
+      HOST_SV + PORT_SV + "/api/tables",
+      {
+        params: {
+          table: "articleStatus",
+        },
       }
-    })
+    );
     //console.log("articleStatus: ", articleStatus);
     setArticleStatus(articleStatus);
-  }
+  };
 
-/*   useEffect(() => {
+  /*   useEffect(() => {
     //console.log("useEffect");
     ////TODO: cambiar esto. No hace falta que vuelva a cargar tablas cada vez que hay un cambio en state!!!
     getTables();
@@ -155,7 +157,6 @@ export function ArticleForm({ articleUpdateId = null }) {
     }
   }, [articleUpdateId]);
 
-  
   return (
     <div className="w-full max-w-xs">
       <Formik
@@ -177,17 +178,16 @@ export function ArticleForm({ articleUpdateId = null }) {
               `http://localhost:3000/api/articles/${articleUpdateId}`,
               {
                 ...values,
-                useremail: `${user.email}`,
               }
             );
             router.push("/");
           }
-          return axios
+          axios
             .post("http://localhost:3000/api/articles", {
               ...values,
-              useremail: `${user.email}`,
             })
             .then((response) => {
+              console.log(response.data);
               return axios
                 .post("http://localhost:3000/api/articles/image", {
                   articleId: response.data.articleid,
@@ -196,13 +196,13 @@ export function ArticleForm({ articleUpdateId = null }) {
                 .catch((e) => console.error(e));
             })
             .catch((e) => console.log(e));
+          router.push("/");
         }}
         enableReinitialize
       >
         {({ handleSubmit, setFieldValue }) => (
           <Form
             onSubmit={handleSubmit}
-            /* onSubmit={formik.handleSubmit} */
             className="bg-white shadow-md rounded px-8 py-6 pb-8 mb-4"
           >
             {articleUpdateId ? (
@@ -226,9 +226,7 @@ export function ArticleForm({ articleUpdateId = null }) {
               <Field
                 type="text"
                 name="articletitle"
-                /* onChange={formik.handleChange} */
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                /* value={formik.values.articletitle} */
               />
             </div>
             <div className="mb-4">
@@ -243,23 +241,8 @@ export function ArticleForm({ articleUpdateId = null }) {
                 className="text-xl text-left text-red-500"
                 name="price"
               />
-              <Field
-                name="price"
-                type="number"
-
-                /* onChange={formik.handleChange} */
-                /* value={formik.values.price} */
-              />
+              <Field name="price" type="number" />
             </div>
-
-            {/*           <button
-            onClick={(e) => {
-              e.preventDefault();
-              fileRef.current.click();
-            }}
-          >
-            Upload File
-          </button> */}
 
             <div className="mb-4">
               <input
@@ -287,10 +270,9 @@ export function ArticleForm({ articleUpdateId = null }) {
                 as="textarea"
                 name="description"
                 rows="2"
-                /* onChange={formik.handleChange} */
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 /* value={formik.values.description} */
-              ></Field>
+              />
             </div>
 
             <button
@@ -306,8 +288,8 @@ export function ArticleForm({ articleUpdateId = null }) {
   );
 }
 
-
-{/*       <form
+{
+  /*       <form
         onSubmit={handleFormSubmit} 
         className="bg-white shadow-md rounded px-8 py-6 pb-8 mb-4"
       >
@@ -400,4 +382,5 @@ export function ArticleForm({ articleUpdateId = null }) {
           {router.query.id ? "Editar article" : "Crear article"}
         </button>
       </form>
- */}
+ */
+}
