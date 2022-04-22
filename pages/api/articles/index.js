@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
 const getArticles = async (req, res) => {
   try {
-    const [result] = await pool.query("SELECT * FROM article");
+    const [result] = await pool.query("SELECT * FROM v_article");
     //console.log(result);
     return res.status(200).json(result);
   } catch (error) {

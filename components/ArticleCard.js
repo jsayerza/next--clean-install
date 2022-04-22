@@ -9,6 +9,7 @@ export function ArticleCard({article}) {
         <p>{article.articlecategory} ({article.articlecategoryid})</p>
         <p>{article.description}</p>
         <p>{article.price}</p>
+        <p>Imatge: {article.imageurl}</p>
       </div>
     </a>
   </Link>

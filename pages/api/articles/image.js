@@ -22,11 +22,13 @@ const getImage = async (req, res) => {
 
 const saveImage = async (req, res) => {
   try {
-    console.log("req.body: ", req.body);
+    //console.log("req.body: ", req.body);
     const { articleId, url } = req.body;
+    ////TODO: Por ahora forzamos 'mainimage: 1' ya que solo usamos una imagen. Se tendrá q gestionar cuando haya más imágenes. JSM 20220422
     const [result] = await pool.query("INSERT INTO articleimage SET ?", {
       articleid: articleId,
       imageurl: url,
+      mainimage: 1
     });
     return res.json(result);
   } catch (e) {

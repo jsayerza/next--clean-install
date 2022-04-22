@@ -146,7 +146,7 @@ export function ArticleForm({ articleUpdateId = null }) {
   useEffect(() => {
     if (articleUpdateId !== null) {
       axios
-        .get(`http://localhost:3000/api/articles/${articleUpdateId}`)
+        .get(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`)
         .then((res) => {
           setUpdateArticle({
             articletitle: res.data.articletitle,
@@ -175,7 +175,7 @@ export function ArticleForm({ articleUpdateId = null }) {
         onSubmit={async (values, actions) => {
           if (articleUpdateId !== null) {
             await axios.put(
-              `http://localhost:3000/api/articles/${articleUpdateId}`,
+              HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`,
               {
                 ...values,
               }
@@ -183,13 +183,13 @@ export function ArticleForm({ articleUpdateId = null }) {
             router.push("/");
           }
           axios
-            .post("http://localhost:3000/api/articles", {
+            .post(HOST_SV + PORT_SV + "/api/articles", {
               ...values,
             })
             .then((response) => {
               console.log(response.data);
               return axios
-                .post("http://localhost:3000/api/articles/image", {
+                .post(HOST_SV + PORT_SV + "/api/articles/image", {
                   articleId: response.data.articleid,
                   url: urlImg,
                 })
