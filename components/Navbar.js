@@ -137,7 +137,7 @@ export function Navbar() {
                   <img
                     src={user.avatar}
                     alt="avatar image"
-                    className="h-10 w-10"
+                    className="h-10 w-10 rounded-full"
                   />
                 </div>
               ) : (
