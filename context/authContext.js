@@ -1,14 +1,22 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { loginWithGoogle, authStateChanged } from "../firebase/client";
 
+const USER_STATES = {
+  NOT_LOGGED: null,
+};
+
 const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(USER_STATES.NOT_LOGGED);
 
   useEffect(() => {
     authStateChanged(setUser);
   }, []);
+
+  /*   useEffect(() => {
+    user === USER_STATES.NOT_LOGGED && router.push("/Login");
+  }, [user]); */
 
   const handleGoogleLogin = () => {
     loginWithGoogle()
