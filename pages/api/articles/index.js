@@ -26,22 +26,26 @@ const saveArticle = async (req, res) => {
 
   try {
     //console.log("creant un article")
-    //console.log(req.body);
+    console.log("saveArticle/req.body: ", req.body);
 
     if (req.files?.image) {
       const result = await uploadImage(req.files.image.tempFilepath);
       console.log(result);
     }
     const [result] = await pool.query("INSERT INTO article SET ?", {
+      articlecategoryid,
       articletitle,
       description,
       price,
+      useremail,
     });
-    //console.log(result);
+    console.log(result);
     return res.json({
+      articlecategoryid,
       articletitle,
       description,
       price,
+      useremail,
       articleid: result.insertId,
     });
   } catch (error) {

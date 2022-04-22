@@ -28,21 +28,30 @@ function ArticleView({article}) {
             <p>{article.articlecategory} ({article.articlecategoryid})</p>
             <p>{article.description}</p>
             <p>{article.price}</p>
+            <div class="flex flex-wrap justify-center">
+                <img
+                src={article.imageurl}
+                class="max-w-sm h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl p-1 bg-white border "
+                alt="..."
+            />
+            </div>
 
-            <button className="bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2" 
-                onClick={() => handleDelete(article.articleid)}
-            >
-                Elimina article
-            </button>
-            <button className="bg-gray-500 hover:bg-gray-800 text-white rounded ml-2 px-5 py-2"
-                onClick={() => {
-                    //console.log("ArticleView/article.articleid: ", article.articleid)
-                    router.push("/articles/edit/" + article.articleid)
-                }
-                }
-            >
-                Edita article
-            </button>
+            <div className="pt-5">
+                <button className="bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2" 
+                    onClick={() => handleDelete(article.articleid)}
+                >
+                    Elimina article
+                </button>
+                <button className="bg-gray-500 hover:bg-gray-800 text-white rounded ml-2 px-5 py-2"
+                    onClick={() => {
+                        //console.log("ArticleView/article.articleid: ", article.articleid)
+                        router.push("/articles/edit/" + article.articleid)
+                    }
+                    }
+                >
+                    Edita article
+                </button>
+            </div>
         </Layout>
     )
 }

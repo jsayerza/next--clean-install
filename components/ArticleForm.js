@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, useField  } from "formik";
 import * as yup from "yup";
 import { getDownloadURL } from "firebase/storage";
 
@@ -13,38 +13,21 @@ import { HOST_SV, PORT_SV } from "config/config";
 export function ArticleForm({ articleUpdateId = null }) {
   console.log("articleUpdateId: ", articleUpdateId);
 
-  //const fileRef = useRef(null);
   const router = useRouter();
   const { user } = useUser();
-
-  let isAddMode = true;
-
-  /*   const [article, setArticle] = useState({
-    articletitle: "",
-    description: "",
-    articlecategoryid: "",
-    articlestatusid: "",
-    price: 0,
-  });
- */
+  //console.log("ArticleForm/user.email: ", user.email)
 
   const [updateArticle, setUpdateArticle] = useState({
+    articlecategoryid: 0,
     articletitle: "",
     price: "",
     description: "",
+    imageurl: "",
   });
 
   const [urlImg, setUrlImg] = useState("");
-  const [image, setImage] = useState(null);
-  const [articleCategories, setArticleCategories] = useState([]);
   const [articleCategory, setArticleCategory] = useState([]);
   const [articleStatus, setArticleStatus] = useState([]);
-
-  /*   const handleFileUploadButton = (e) => {
-    e.preventDefault();
-    fileRef.current.click();
-  };
- */
 
   const handleUpload = (file) => {
     const { uploadTask } = uploadImage(file);
@@ -64,38 +47,6 @@ export function ArticleForm({ articleUpdateId = null }) {
     );
   };
 
-  /*   const handleFormSubmit = async (e) => {
-    //toast.success("Hola handleFormSubmit");
-    //console.log("handleFormSubmit/e", e);
-    e.preventDefault();
-
-    try {
-      //console.log("handleFormSubmit/try");
-      //toast.success("Hola handleFormSubmit/try");
-      if (router.query.id) {
-        //console.log("update");
-        const res = await axios.put("/api/articles/" + router.query.id, article);
-        //console.log("update/res: ", res);
-        toast.success("Article actualitzat");
-      } else {
-        console.log("add");
-        console.log("add/article: ", article);
-        const res = await axios.post("/api/articles", article);
-        //console.log("add/res: ", res);
-        toast.success("Article enregistrat");
-      }
-      router.push("/");
-    } catch (error) {
-      toast.log(error.response.data.message);
-    }
-  };
- */
-
-  /*   const handleChange = ({ target: { name, value } }) => {
-    console.log(name, value)
-    setArticle({ ...article, [name]: value });
-  };
- */
 
   const getTables = async () => {
     //console.log("getTables")
@@ -122,48 +73,58 @@ export function ArticleForm({ articleUpdateId = null }) {
     setArticleStatus(articleStatus);
   };
 
-  /*   useEffect(() => {
-    //console.log("useEffect");
-    ////TODO: cambiar esto. No hace falta que vuelva a cargar tablas cada vez que hay un cambio en state!!!
+  ////TODO: cambiar esto. No hace falta que vuelva a cargar tablas cada vez que hay un cambio en state!!!
+  if (articleCategory.length < 1) {
+    //console.log("articleCategory.length: ", articleCategory.length);
     getTables();
+  }
 
-    const getArticle = async () => {
-      const { data } = await axios.get("/api/articles/" + router.query.id);
-      setArticle(data);
-      console.log("getArticle/data: ", data);
-      //const { data: categories } = await axios.get("/api/articles/categories");
-      //setArticleCategories(categories);
-    };
-
-    if (router.query?.id) {
-      isAddMode = false;
-      console.log("useEffect/router.query.id: ", router.query.id)
-      getArticle(router.query.id);
-    }
-  }, [router.query.id]);
- */
 
   useEffect(() => {
     if (articleUpdateId !== null) {
       axios
         .get(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`)
         .then((res) => {
+          console.log("useEffect/res.data: ", res.data);
           setUpdateArticle({
+            articlecategoryid: res.data.articlecategoryid,
             articletitle: res.data.articletitle,
             description: res.data.description,
             price: res.data.price,
+            imageurl: res.data.imageurl,
           });
         });
     }
   }, [articleUpdateId]);
 
+  const MySelect = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
+    return (
+      <div>
+        <label 
+          htmlFor={props.id || props.name}
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          {label}
+        </label>
+        <select {...field} {...props} />
+        {meta.touched && meta.error ? (
+          <div className="error">{meta.error}</div>
+        ) : null}
+      </div>
+    );
+  };
+
+
   return (
     <div className="w-full max-w-xs">
       <Formik
         initialValues={{
+          articlecategoryid: articleUpdateId ? updateArticle.articlecategoryid : 0,
           articletitle: articleUpdateId ? updateArticle.articletitle : "",
           price: articleUpdateId ? updateArticle.price : 0,
           description: articleUpdateId ? updateArticle.description : "",
+          useremail: articleUpdateId ? updateArticle.useremail : "", 
         }}
         validationSchema={
           new yup.ObjectSchema({
@@ -173,16 +134,19 @@ export function ArticleForm({ articleUpdateId = null }) {
           })
         }
         onSubmit={(values, actions) => {
+          console.log("onSubmit/values: ", values);
           if (articleUpdateId !== null) {
             return axios
               .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
                 ...values,
+                useremail: `${user.email}`
               })
               .then((res) => router.push("/"));
           }
           return axios
             .post(HOST_SV + PORT_SV + "/api/articles", {
               ...values,
+              useremail: `${user.email}`
             })
             .then((response) => {
               console.log(response.data);
@@ -204,17 +168,60 @@ export function ArticleForm({ articleUpdateId = null }) {
             className="bg-white shadow-md rounded px-8 py-6 pb-8 mb-4"
           >
             {articleUpdateId ? (
-              <h1 className="mb-4 text-3xl font-bold">Editar</h1>
+              <h1 className="mb-4 text-3xl font-bold">Editar article</h1>
             ) : (
-              <h1 className="mb-4 text-3xl font-bold">Crear</h1>
+              <h1 className="mb-4 text-3xl font-bold">Afegir article</h1>
             )}
+
+{/*             <div className="mb-4">
+              <MySelect 
+                label="Categoria: " 
+                name="articlecategoryid"
+              >
+                  {articleCategory.map((category) => (
+                    <option
+                      key={category.articlecategoryid}
+                      value={category.articlecategoryid}
+                      label={category.articlecategory}
+                    >
+                      {category.articlecategory}
+                    </option>
+                  ))}
+              </MySelect>
+            </div>
+ */}
+            <div className="mb-4">
+              <label
+                htmlFor="articlecategoryid"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Categoria: 
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="articlecategoryid"
+              />
+              <select>
+                {articleCategory.map((category) => (
+                    <option
+                      key={category.articlecategoryid}
+                      value={category.articlecategoryid}
+                      label={category.articlecategory}
+                    >
+                      {category.articlecategory}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
 
             <div className="mb-4">
               <label
                 htmlFor="articletitle"
-                className="block text-gray-700 text-sm font-blod mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Article:
+                Posa nom a l'article:
               </label>
               <ErrorMessage
                 component="p"
@@ -227,19 +234,20 @@ export function ArticleForm({ articleUpdateId = null }) {
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
+
             <div className="mb-4">
               <label
                 htmlFor="price"
-                className="block text-gray-700 text-sm font-blod mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Preu:
+                Preu (donació = 0€):
               </label>
               <ErrorMessage
                 component="p"
                 className="text-xl text-left text-red-500"
                 name="price"
               />
-              <Field name="price" type="number" />
+              <Field name="price" type="number" className="text-right"/>€
             </div>
 
             <div className="mb-4">
@@ -251,11 +259,22 @@ export function ArticleForm({ articleUpdateId = null }) {
                 }
               />
             </div>
+            {updateArticle.imageurl ? 
+              <div class="flex flex-wrap justify-center">
+                <img
+                  src={updateArticle.imageurl}
+                  class="max-w-full h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
+                  alt="..."
+                />
+            </div>            
+          : 
+            <div></div>
+            }
 
             <div className="mb-4">
               <label
                 htmlFor="description"
-                className="block text-gray-700 text-sm font-blod mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
                 Descripció:
               </label>
@@ -272,6 +291,26 @@ export function ArticleForm({ articleUpdateId = null }) {
               />
             </div>
 
+            <div className="mb-4">
+              <label
+                htmlFor="useremail"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                User:
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="useremail"
+              />
+              <Field
+                type="text"
+                name="useremail"
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+
+
             <button
               type="submit"
               className="bg-emerald-500 hover:bg-emerald-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline font-bold text-white"
@@ -285,99 +324,3 @@ export function ArticleForm({ articleUpdateId = null }) {
   );
 }
 
-{
-  /*       <form
-        onSubmit={handleFormSubmit} 
-        className="bg-white shadow-md rounded px-8 py-6 pb-8 mb-4"
-      >
-        <h1 className="mb-4 text-3xl font-bold">{isAddMode ? 'Afegir Article' : 'Editar Article'}</h1>
-
-        <div className="mb-4">
-          <label
-            htmlFor="articletitle"
-            className="block text-gray-700 text-sm font-blod mb-2"
-          >
-            Article:
-          </label>
-          <input
-            type="text"
-            name="articletitle"
-            onChange={handleChange}
-            className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={article.articletitle}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="price"
-            className="block text-gray-700 text-sm font-blod mb-2"
-          >
-            Preu:
-          </label>
-          <input
-            type="text"
-            name="price"
-            id="price"
-            onChange={handleChange}
-            className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={article.price}
-          />
-        </div>
-
-        <div className="mb-4">
-          <input
-            ref={fileRef}
-            type="file"
-            accept="images/*"
-            onChange={handleFileUpload}
-            multiple={false}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="articlecategoryid" style={{ display: "block" }}>
-            Categoria
-          </label>
-          <select
-            name="articlecategoryid"
-            value={article.articlecategoryid}
-            onChange={handleChange}
-            style={{ display: "block" }}
-          >
-            {articleCategory.map((category) => (
-              <option
-                key={category.articlecategoryid}
-                value={category.articlecategoryid}
-                label={category.articlecategory}
-              >
-                {category.articlecategory}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="description"
-            className="block text-gray-700 text-sm font-blod mb-2"
-          >
-            Descripció:
-          </label>
-          <textarea
-            name="description"
-            rows="2"
-            onChange={handleChange}
-            className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={article.description}
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          className="bg-emerald-500 hover:bg-emerald-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline font-bold text-white"
-        >
-          {router.query.id ? "Editar article" : "Crear article"}
-        </button>
-      </form>
- */
-}
