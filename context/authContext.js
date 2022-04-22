@@ -14,7 +14,9 @@ export const AuthContextProvider = ({ children }) => {
     authStateChanged(setUser);
   }, []);
 
-  /*   useEffect(() => {
+  /* OJO LOGICA PARA LAS RUTAS DE ATENTICACION
+
+  useEffect(() => {
     user === USER_STATES.NOT_LOGGED && router.push("/Login");
   }, [user]); */
 
