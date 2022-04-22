@@ -7,17 +7,7 @@ import { useUser } from "context/authContext";
 function HomePage({ articles }) {
   //console.log(articles);
   const { user } = useUser();
-  //console.log("user: ", user);
-
-  /*     console.log("articles.length: ", articles.length);
-    {!articles.length > 0 ? (
-      <h1 className="text-center text-2xl font-bold">No hi ha articles</h1>
-    ) : (
-      articles.map((article) => (
-        <ArticleCard key={article.articleid} article={article} />
-      ))
-    )}
- */
+  console.log("HomePage/user: ", user);
 
   return (
     <Layout>
@@ -54,7 +44,7 @@ export const getServerSideProps = async (context) => {
   const { data: articles } = await axios.get(
     HOST_SV + PORT_SV + "/api/articles"
   );
-  console.log("getServerSideProps/articles: ", articles);
+  //console.log("getServerSideProps/articles: ", articles);
 
   return {
     props: {

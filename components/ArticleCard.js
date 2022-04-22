@@ -8,8 +8,15 @@ export function ArticleCard({article}) {
         <h1>{article.articletitle}</h1>
         <p>{article.articlecategory} ({article.articlecategoryid})</p>
         <p>{article.description}</p>
-        <p>{article.price}</p>
-        <p>Imatge: {article.imageurl}</p>
+        <p>{article.price} €</p>
+        <p>user: {article.useremail}</p>
+        <div class="flex flex-wrap justify-center">
+          <img
+          src={article.imageurl}
+          class="max-w-full h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
+          alt="..."
+        />
+        </div>
       </div>
     </a>
   </Link>
