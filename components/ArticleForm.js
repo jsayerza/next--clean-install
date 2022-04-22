@@ -172,17 +172,15 @@ export function ArticleForm({ articleUpdateId = null }) {
             description: yup.string().required("Description is required"),
           })
         }
-        onSubmit={async (values, actions) => {
+        onSubmit={(values, actions) => {
           if (articleUpdateId !== null) {
-            await axios.put(
-              HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`,
-              {
+            return axios
+              .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
                 ...values,
-              }
-            );
-            router.push("/");
+              })
+              .then((res) => router.push("/"));
           }
-          axios
+          return axios
             .post(HOST_SV + PORT_SV + "/api/articles", {
               ...values,
             })
@@ -193,10 +191,10 @@ export function ArticleForm({ articleUpdateId = null }) {
                   articleId: response.data.articleid,
                   url: urlImg,
                 })
+                .then((res) => router.push("/"))
                 .catch((e) => console.error(e));
             })
             .catch((e) => console.log(e));
-          router.push("/");
         }}
         enableReinitialize
       >
