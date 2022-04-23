@@ -7,10 +7,6 @@ function HomePage({ articles }) {
   return (
     <Layout>
       <Home articles={articles} />
-      {/*       <div>
-        <h1 className="text-xl">Funciona! tailwind!</h1>
-      </div>
- */}
     </Layout>
   );
 }
