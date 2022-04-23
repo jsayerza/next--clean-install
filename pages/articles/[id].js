@@ -25,18 +25,26 @@ function ArticleView({article}) {
     return (
         <Layout>
             <h1>{article.articletitle}</h1>
-            <p>{article.articlecategory} ({article.articlecategoryid})</p>
+
+            <p>{article.articlecategory}</p>
             <p>{article.description}</p>
-            <p>{article.price}</p>
-            <div class="flex flex-wrap justify-center">
+            <p>{article.articlestatus}</p>
+            <p>{article.price} €</p>
+            {/* ////TODO: Hay que mostrar el nombre del vendedor, no el email. 
+                2 opciones:
+                1. Guardar el nombre del vendedor en el article
+                2. Hacer fetch del nombre en Firebase, a partir del email del vendedor*/}
+            <p>Referència: {article.useremail}</p>
+
+            <div className="flex flex-wrap justify-center">
                 <img
                 src={article.imageurl}
-                class="max-w-sm h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl p-1 bg-white border "
+                className="max-w-sm h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl p-1 bg-white border "
                 alt="..."
             />
             </div>
 
-            <div className="pt-5">
+            <div className="py-5">
                 <button className="bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2" 
                     onClick={() => handleDelete(article.articleid)}
                 >

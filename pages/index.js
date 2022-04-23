@@ -27,7 +27,7 @@ function HomePage({ articles }) {
       const response = await axios.get(
         HOST_SV + PORT_SV + `/api/articles/search/${search}`
       );
-      console.log(response.data);
+      //console.log(response.data);
       setSearchResult(response.data);
     }
     searchedResults();
@@ -74,7 +74,7 @@ export const getServerSideProps = async (context) => {
   const { data: articles } = await axios.get(
     HOST_SV + PORT_SV + "/api/articles"
   );
-  console.log("getServerSideProps/articles: ", articles);
+  //console.log("getServerSideProps/articles: ", articles);
 
   return {
     props: {

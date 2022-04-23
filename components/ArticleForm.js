@@ -11,18 +11,20 @@ import { useUser } from "context/authContext";
 import { HOST_SV, PORT_SV } from "config/config";
 
 export function ArticleForm({ articleUpdateId = null }) {
-  console.log("articleUpdateId: ", articleUpdateId);
+  //console.log("articleUpdateId: ", articleUpdateId);
 
   const router = useRouter();
   const { user } = useUser();
   //console.log("ArticleForm/user.email: ", user.email)
+  console.log("ArticleForm/user: ", user)
 
   const [updateArticle, setUpdateArticle] = useState({
     articlecategoryid: 0,
     articletitle: "",
-    price: "",
+    price: 0,
     description: "",
     imageurl: "",
+    articlestatusid: 0,
   });
 
   const [urlImg, setUrlImg] = useState("");
@@ -92,6 +94,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             description: res.data.description,
             price: res.data.price,
             imageurl: res.data.imageurl,
+            articlestatusid: res.data.articlestatusid,
           });
         });
     }
@@ -125,6 +128,8 @@ export function ArticleForm({ articleUpdateId = null }) {
           price: articleUpdateId ? updateArticle.price : 0,
           description: articleUpdateId ? updateArticle.description : "",
           useremail: articleUpdateId ? updateArticle.useremail : "", 
+          articlestatusid: articleUpdateId ? updateArticle.articlestatusid : 0,
+          
         }}
         validationSchema={
           new yup.ObjectSchema({
@@ -133,7 +138,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             description: yup.string().required("Description is required"),
           })
         }
-        onSubmit={(values, actions) => {
+/*         onSubmit={(values, actions) => {
           console.log("onSubmit/values: ", values);
           if (articleUpdateId !== null) {
             return axios
@@ -146,7 +151,7 @@ export function ArticleForm({ articleUpdateId = null }) {
           return axios
             .post(HOST_SV + PORT_SV + "/api/articles", {
               ...values,
-              useremail: `${user.email}`
+              //useremail: `${user.email}`
             })
             .then((response) => {
               console.log(response.data);
@@ -156,10 +161,44 @@ export function ArticleForm({ articleUpdateId = null }) {
                   url: urlImg,
                 })
                 .then((res) => router.push("/"))
-                .catch((e) => console.error(e));
+                .catch((e) => console.error("onSubmit image error: ", e));
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.log("onSubmit article error: ", e));
         }}
+ */
+        onSubmit={(values, actions) => {
+          //console.log("onSubmit/values: ", values);
+          if (articleUpdateId !== null) {
+            console.log("onSubmit/PUT");
+            return axios
+              .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
+                ...values,
+                useremail: `${user.email}`
+              })
+              .then((res) => router.push("/"));
+          } else {
+            console.log("onSubmit/POST");
+            console.log("onSubmit/POST/values: ", values);
+            console.log("onSubmit/POST/`${user.email}`: ", `${user.email}`);
+            return axios
+              .post(HOST_SV + PORT_SV + "/api/articles", {
+                ...values,
+                useremail: `${user.email}`
+              })
+              .then((response) => {
+                console.log(response.data);
+                return axios
+                  .post(HOST_SV + PORT_SV + "/api/articles/image", {
+                    articleId: response.data.articleid,
+                    url: urlImg,
+                  })
+                  .then((res) => router.push("/"))
+                  .catch((e) => console.error("onSubmit image error: ", e));
+              })
+              .catch((e) => console.log("onSubmit article error: ", e));
+          }
+        }}
+
         enableReinitialize
       >
         {({ handleSubmit, setFieldValue }) => (
@@ -202,7 +241,21 @@ export function ArticleForm({ articleUpdateId = null }) {
                 className="text-xl text-left text-red-500"
                 name="articlecategoryid"
               />
-              <select>
+              <Field
+                component="select"
+                name="articlecategoryid"
+                id="articlecategoryid"
+                multiple={false}
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                    <option
+                      key={0}
+                      value={0}
+                      label="Selecciona..."
+                    >
+                      Selecciona...
+                    </option>
+                  
                 {articleCategory.map((category) => (
                     <option
                       key={category.articlecategoryid}
@@ -212,9 +265,8 @@ export function ArticleForm({ articleUpdateId = null }) {
                       {category.articlecategory}
                     </option>
                   ))}
-              </select>
+              </Field>
             </div>
-
 
             <div className="mb-4">
               <label
@@ -260,10 +312,10 @@ export function ArticleForm({ articleUpdateId = null }) {
               />
             </div>
             {updateArticle.imageurl ? 
-              <div class="flex flex-wrap justify-center">
+              <div className="flex flex-wrap justify-center">
                 <img
                   src={updateArticle.imageurl}
-                  class="max-w-full h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
+                  className="max-w-full h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
                   alt="..."
                 />
             </div>            
@@ -293,6 +345,46 @@ export function ArticleForm({ articleUpdateId = null }) {
 
             <div className="mb-4">
               <label
+                htmlFor="articlestatusid"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Estat de l'article: 
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="articlestatusid"
+              />
+              <Field
+                component="select"
+                name="articlestatusid"
+                id="articlestatusid"
+                multiple={false}
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                    <option
+                      key={0}
+                      value={0}
+                      label="Selecciona..."
+                    >
+                      Selecciona...
+                    </option>
+                  
+                {articleStatus.map((category) => (
+                    <option
+                      key={category.articlestatusid}
+                      value={category.articlestatusid}
+                      label={category.articlestatus}
+                    >
+                      {category.articlestatus}
+                    </option>
+                  ))}
+              </Field>
+            </div>
+
+
+{/*             <div className="mb-4">
+              <label
                 htmlFor="useremail"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
@@ -309,7 +401,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-
+ */}
 
             <button
               type="submit"
