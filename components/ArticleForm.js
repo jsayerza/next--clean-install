@@ -16,7 +16,7 @@ export function ArticleForm({ articleUpdateId = null }) {
   const router = useRouter();
   const { user } = useUser();
   //console.log("ArticleForm/user.email: ", user.email)
-  console.log("ArticleForm/user: ", user)
+  //console.log("ArticleForm/user: ", user)
 
   const [updateArticle, setUpdateArticle] = useState({
     articlecategoryid: 0,
@@ -25,11 +25,20 @@ export function ArticleForm({ articleUpdateId = null }) {
     description: "",
     imageurl: "",
     articlestatusid: 0,
+    courseid: 0,
+    locationid: 0,
+    publicationstatusid: 0,
+    salestatusid: 0,
+
   });
 
   const [urlImg, setUrlImg] = useState("");
   const [articleCategory, setArticleCategory] = useState([]);
   const [articleStatus, setArticleStatus] = useState([]);
+  const [course, setCourse] = useState([]);
+  const [location, setLocation] = useState([]);
+  const [publicationStatus, setPublicationStatus] = useState([]);
+  const [saleStatus, setSaleStatus] = useState([]);
 
   const handleUpload = (file) => {
     const { uploadTask } = uploadImage(file);
@@ -51,7 +60,7 @@ export function ArticleForm({ articleUpdateId = null }) {
 
 
   const getTables = async () => {
-    //console.log("getTables")
+    console.log("getTables")
     const { data: articleCategory } = await axios.get(
       HOST_SV + PORT_SV + "/api/tables",
       {
@@ -73,9 +82,54 @@ export function ArticleForm({ articleUpdateId = null }) {
     );
     //console.log("articleStatus: ", articleStatus);
     setArticleStatus(articleStatus);
+
+    const { data: course } = await axios.get(
+      HOST_SV + PORT_SV + "/api/tables",
+      {
+        params: {
+          table: "course",
+        },
+      }
+    );
+    //console.log("course: ", course);
+    setCourse(course);
+
+    const { data: location } = await axios.get(
+      HOST_SV + PORT_SV + "/api/tables",
+      {
+        params: {
+          table: "location",
+        },
+      }
+    );
+    //console.log("location: ", location);
+    setLocation(location);
+
+    const { data: publicationStatus } = await axios.get(
+      HOST_SV + PORT_SV + "/api/tables",
+      {
+        params: {
+          table: "publicationStatus",
+        },
+      }
+    );
+    //console.log("publicationStatus: ", publicationStatus);
+    setPublicationStatus(publicationStatus);
+
+    const { data: saleStatus } = await axios.get(
+      HOST_SV + PORT_SV + "/api/tables",
+      {
+        params: {
+          table: "saleStatus",
+        },
+      }
+    );
+    //console.log("saleStatus: ", saleStatus);
+    setSaleStatus(saleStatus);
+
   };
 
-  ////TODO: cambiar esto. No hace falta que vuelva a cargar tablas cada vez que hay un cambio en state!!!
+  ////TODO: revisar esto. ¿carga varias veces?
   if (articleCategory.length < 1) {
     //console.log("articleCategory.length: ", articleCategory.length);
     getTables();
@@ -95,12 +149,18 @@ export function ArticleForm({ articleUpdateId = null }) {
             price: res.data.price,
             imageurl: res.data.imageurl,
             articlestatusid: res.data.articlestatusid,
+
+            courseid: res.data.courseid,
+            locationid: res.data.locationid,
+            publicationstatusid: res.data.publicationstatusid,
+            salestatusid: res.data.salestatusid,
+          
           });
         });
     }
   }, [articleUpdateId]);
 
-  const MySelect = ({ label, ...props }) => {
+/*   const MySelect = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
       <div>
@@ -117,6 +177,61 @@ export function ArticleForm({ articleUpdateId = null }) {
       </div>
     );
   };
+ */
+
+/*   const MySelect = ({ label, name, table, key, optionlabel }) => {
+
+    //label="Categoria: " 
+    //name="articlecategoryid"
+    //table="articleCategory"
+    //key="articlecategoryid"
+    //optionlabel="articlecategory"
+
+
+    return (
+      <div>
+              <label
+                htmlFor="articlecategoryid"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                {label}
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name={name}
+              />
+              <Field
+                component="select"
+                name={name}
+                id={name}
+                multiple={false}
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                    <option
+                      key={0}
+                      value={0}
+                      label="Selecciona..."
+                    >
+                      Selecciona...
+                    </option>
+                  
+                {table.map((list) => (
+                    <option
+                      key={list.name}
+                      value={list.name}
+                      label={list.optionlabel}
+                    >
+                      {list.optionlabel}
+                    </option>
+                  ))}
+
+              </Field>
+
+      </div>
+    );
+  };
+ */
 
 
   return (
@@ -129,7 +244,12 @@ export function ArticleForm({ articleUpdateId = null }) {
           description: articleUpdateId ? updateArticle.description : "",
           useremail: articleUpdateId ? updateArticle.useremail : "", 
           articlestatusid: articleUpdateId ? updateArticle.articlestatusid : 0,
-          
+
+          courseid: articleUpdateId ? updateArticle.courseid : 0,
+          locationid: articleUpdateId ? updateArticle.locationid : 0,
+          publicationstatusid: articleUpdateId ? updateArticle.publicationstatusid : 0,
+          salestatusid: articleUpdateId ? updateArticle.salestatusid : 0,
+        
         }}
         validationSchema={
           new yup.ObjectSchema({
@@ -138,36 +258,9 @@ export function ArticleForm({ articleUpdateId = null }) {
             description: yup.string().required("Description is required"),
           })
         }
-/*         onSubmit={(values, actions) => {
-          console.log("onSubmit/values: ", values);
-          if (articleUpdateId !== null) {
-            return axios
-              .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
-                ...values,
-                useremail: `${user.email}`
-              })
-              .then((res) => router.push("/"));
-          }
-          return axios
-            .post(HOST_SV + PORT_SV + "/api/articles", {
-              ...values,
-              //useremail: `${user.email}`
-            })
-            .then((response) => {
-              console.log(response.data);
-              return axios
-                .post(HOST_SV + PORT_SV + "/api/articles/image", {
-                  articleId: response.data.articleid,
-                  url: urlImg,
-                })
-                .then((res) => router.push("/"))
-                .catch((e) => console.error("onSubmit image error: ", e));
-            })
-            .catch((e) => console.log("onSubmit article error: ", e));
-        }}
- */
+
         onSubmit={(values, actions) => {
-          //console.log("onSubmit/values: ", values);
+          console.log("onSubmit/values: ", values);
           if (articleUpdateId !== null) {
             console.log("onSubmit/PUT");
             return axios
@@ -207,7 +300,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             className="bg-white shadow-md rounded px-8 py-6 pb-8 mb-4"
           >
             {articleUpdateId ? (
-              <h1 className="mb-4 text-3xl font-bold">Editar article</h1>
+              <h1 className="mb-4 text-3xl font-bold">Actualitzar article</h1>
             ) : (
               <h1 className="mb-4 text-3xl font-bold">Afegir article</h1>
             )}
@@ -229,6 +322,19 @@ export function ArticleForm({ articleUpdateId = null }) {
               </MySelect>
             </div>
  */}
+
+{/*             <div className="mb-4">
+              <MySelect 
+                label="Categoria: " 
+                name="articlecategoryid"
+                table="articleCategory"
+                key="articlecategoryid"
+                optionlabel="articlecategory"
+              >
+              </MySelect>
+            </div>
+ */}
+
             <div className="mb-4">
               <label
                 htmlFor="articlecategoryid"
@@ -288,21 +394,6 @@ export function ArticleForm({ articleUpdateId = null }) {
             </div>
 
             <div className="mb-4">
-              <label
-                htmlFor="price"
-                className="block text-gray-700 text-sm font-bold mb-2"
-              >
-                Preu (donació = 0€):
-              </label>
-              <ErrorMessage
-                component="p"
-                className="text-xl text-left text-red-500"
-                name="price"
-              />
-              <Field name="price" type="number" className="text-right"/>€
-            </div>
-
-            <div className="mb-4">
               <input
                 type="file"
                 name="imageUrl"
@@ -345,10 +436,50 @@ export function ArticleForm({ articleUpdateId = null }) {
 
             <div className="mb-4">
               <label
+                htmlFor="courseid"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Curs escolar: 
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="courseid"
+              />
+              <Field
+                component="select"
+                name="courseid"
+                id="courseid"
+                multiple={false}
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                    <option
+                      key={0}
+                      value={0}
+                      label="Selecciona..."
+                    >
+                      Selecciona...
+                    </option>
+                  
+                {course.map((list) => (
+                    <option
+                      key={list.courseid}
+                      value={list.courseid}
+                      label={list.course}
+                    >
+                      {list.course}
+                    </option>
+                  ))}
+              </Field>
+            </div>
+
+
+            <div className="mb-4">
+              <label
                 htmlFor="articlestatusid"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Estat de l'article: 
+                Estat de conservació: 
               </label>
               <ErrorMessage
                 component="p"
@@ -370,20 +501,156 @@ export function ArticleForm({ articleUpdateId = null }) {
                       Selecciona...
                     </option>
                   
-                {articleStatus.map((category) => (
+                {articleStatus.map((list) => (
                     <option
-                      key={category.articlestatusid}
-                      value={category.articlestatusid}
-                      label={category.articlestatus}
+                      key={list.articlestatusid}
+                      value={list.articlestatusid}
+                      label={list.articlestatus}
                     >
-                      {category.articlestatus}
+                      {list.articlestatus}
                     </option>
                   ))}
               </Field>
             </div>
 
 
-{/*             <div className="mb-4">
+            <div className="mb-4">
+              <label
+                htmlFor="locationid"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Localitat (ubicació): 
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="locationid"
+              />
+              <Field
+                component="select"
+                name="locationid"
+                id="locationid"
+                multiple={false}
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                    <option
+                      key={0}
+                      value={0}
+                      label="Selecciona..."
+                    >
+                      Selecciona...
+                    </option>
+                  
+                {location.map((list) => (
+                    <option
+                      key={list.locationid}
+                      value={list.locationid}
+                      label={list.location}
+                    >
+                      {list.location}
+                    </option>
+                  ))}
+              </Field>
+            </div>
+
+
+            <div className="mb-4">
+              <label
+                htmlFor="publicationstatusid"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Estat de publicació: 
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="publicationstatusid"
+              />
+              <Field
+                component="select"
+                name="publicationstatusid"
+                id="publicationstatusid"
+                multiple={false}
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                    <option
+                      key={0}
+                      value={0}
+                      label="Selecciona..."
+                    >
+                      Selecciona...
+                    </option>
+                  
+                {publicationStatus.map((list) => (
+                    <option
+                      key={list.publicationstatusid}
+                      value={list.publicationstatusid}
+                      label={list.publicationstatus}
+                    >
+                      {list.publicationstatus}
+                    </option>
+                  ))}
+              </Field>
+            </div>
+
+
+            <div className="mb-4">
+              <label
+                htmlFor="price"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Preu (donació = 0€):
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="price"
+              />
+              <Field name="price" type="number" className="text-right"/>€
+            </div>
+
+
+            <div className="mb-4">
+              <label
+                htmlFor="salestatusid"
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                Estat de venda: 
+              </label>
+              <ErrorMessage
+                component="p"
+                className="text-xl text-left text-red-500"
+                name="salestatusid"
+              />
+              <Field
+                component="select"
+                name="salestatusid"
+                id="salestatusid"
+                multiple={false}
+                className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                    <option
+                      key={0}
+                      value={0}
+                      label="Selecciona..."
+                    >
+                      Selecciona...
+                    </option>
+                  
+                {saleStatus.map((list) => (
+                    <option
+                      key={list.salestatusid}
+                      value={list.salestatusid}
+                      label={list.salestatus}
+                    >
+                      {list.salestatus}
+                    </option>
+                  ))}
+              </Field>
+            </div>
+
+
+            <div className="mb-4">
               <label
                 htmlFor="useremail"
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -401,7 +668,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
- */}
+
 
             <button
               type="submit"

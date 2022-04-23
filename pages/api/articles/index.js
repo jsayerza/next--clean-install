@@ -21,8 +21,9 @@ const getArticles = async (req, res) => {
   }
 };
 
+
 const saveArticle = async (req, res) => {
-  const { articlecategoryid, articletitle, description, price, useremail, articlestatusid } = req.body;
+  const { articlecategoryid, articletitle, description, price, useremail, articlestatusid, courseid, locationid, publicationstatusid, salesstatusid } = req.body;
 
   try {
     //console.log("creant un article")
@@ -40,6 +41,7 @@ const saveArticle = async (req, res) => {
       price,
       useremail,
       articlestatusid,
+      courseid, locationid, publicationstatusid, salesstatusid,
     });
     //console.log("saveArticle/result: ", result);
     return res.json({
@@ -49,6 +51,7 @@ const saveArticle = async (req, res) => {
       price,
       useremail,
       articlestatusid,
+      courseid, locationid, publicationstatusid, salesstatusid,
       articleid: result.insertId,
     });
   } catch (error) {
