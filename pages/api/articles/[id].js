@@ -43,12 +43,15 @@ const deleteArticle = async (req, res) => {
 
 const updateArticle = async (req, res) => {
   const { id } = req.query;
-  const { articletitle, articlecategoryid, description, price, useremail, articlestatusid } = req.body;
+  const { articletitle, articlecategoryid, description, price, useremail, articlestatusid, courseid, locationid, publicationstatusid, salestatusid } = req.body;
   console.log("updateArticle/req.body: ", req.body);
   try {
     await pool.query(
-      "UPDATE article SET articletitle = ?, articlecategoryid = ?, description = ?, price = ?, useremail = ?, articlestatusid = ? WHERE articleid = ?",
-      [articletitle, articlecategoryid, description, price, useremail, articlestatusid, id]
+      "UPDATE article " +
+      "SET articletitle = ?, articlecategoryid = ?, description = ?, price = ?, useremail = ?, articlestatusid = ?, " +
+      "courseid = ?, locationid = ?, publicationstatusid = ?, salestatusid = ? " +
+      "WHERE articleid = ?",
+      [articletitle, articlecategoryid, description, price, useremail, articlestatusid, courseid, locationid, publicationstatusid, salestatusid, id]
     );
     return res.status(204).json();
   } catch (error) {
