@@ -1,12 +1,17 @@
-export default function SearchBar({ change }) {
+export const SearchIcon = ({ size = "24" }) => {
   return (
-    <div>
-      <input
-        className="p-2 text-md font-bold  w-1/2 my-2 mx-auto shadow-sm"
-        type="text"
-        placeholder="Cerca un artícle"
-        onChange={change}
-      />
-    </div>
+    <svg
+      width={size}
+      height={size}
+      fill="none"
+      stroke="#b1b2b1"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m19 19-3.5-3.5"></path>
+      <circle cx="11" cy="11" r="6"></circle>
+    </svg>
   );
-}
+};
