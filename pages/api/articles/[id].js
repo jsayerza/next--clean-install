@@ -44,7 +44,7 @@ const deleteArticle = async (req, res) => {
 const updateArticle = async (req, res) => {
   const { id } = req.query;
   const { articletitle, articlecategoryid, description, price, useremail, articlestatusid, courseid, locationid, publicationstatusid, salestatusid } = req.body;
-  console.log("updateArticle/req.body: ", req.body);
+  //console.log("updateArticle/req.body: ", req.body);
   try {
     await pool.query(
       "UPDATE article " +

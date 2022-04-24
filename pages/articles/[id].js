@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 import { HOST_SV, PORT_SV } from "config/config";
 import { Layout } from "../../components/Layout";
+//import ButtonMailto from "components/ButtonMailTo";
 
 
 function ArticleView({article}) {
@@ -14,12 +15,19 @@ function ArticleView({article}) {
     const handleDelete = async (id) => {
         try {
             //console.log(id);
-            await axios.delete("/api/articles/" + id);
-            router.push("/");
+            return await axios.delete("/api/articles/" + id)
+            .then(async (res) => {
+                await axios.delete("/api/articles/images/" + id);
+                toast.success("Article eliminat");
+                router.push("/");
+            })
+            .catch((e) => console.log("handleDelete delete article error: ", e));
+            
         } catch (error) {
             toast.error(error.response.data.message);
         }
     };
+
 
 
     return (
@@ -135,7 +143,7 @@ function ArticleView({article}) {
                                                 1. Guardar el nombre del vendedor en el article
                                                 2. Hacer fetch del nombre en Firebase, a partir del email del vendedor*/}
 
-                                                {article.useremail}
+                                                {article.username}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -149,29 +157,6 @@ function ArticleView({article}) {
             </div>
             </div>
 
-
-
-
-{/*             <h1>{article.articletitle}</h1>
-
-            <p>{article.articlecategory}</p>
-            <p>{article.description}</p>
-            <p>{article.articlestatus}</p>
-            <p>{article.courseid}</p>
-            <p>{article.locationid}</p>
-            <p>{article.publicationstatusid}</p>
-            <p>{article.salesstatusid}</p>
-            <p>{article.price} €</p>
-            <p>Referència: {article.useremail}</p>
- */}
-{/*             <div className="flex flex-wrap justify-center">
-                <img
-                src={article.imageurl}
-                className="max-w-sm h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl p-1 bg-white border "
-                alt="..."
-            />
-            </div>
- */}
             <div className="py-5">
                 <button className="bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2" 
                     onClick={() => handleDelete(article.articleid)}
@@ -187,6 +172,12 @@ function ArticleView({article}) {
                 >
                     Edita article
                 </button>
+                <button className="bg-gray-500 hover:bg-gray-800 text-white rounded ml-2 px-5 py-2" 
+                    onClick={() => router.push(`mailto:${article.useremail}`)}
+                >
+                    Contacta amb el venedor
+                </button>
+                {/* <ButtonMailto label="Contacta amb el venedor" mailto="mailto: ${article.email}" /> */}
             </div>
         </Layout>
     )

@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
 
 const updateImage = async (req, res) => {
-  console.log("updateImage/req.body: ", req.body);
+  //console.log("updateImage/req.body: ", req.body);
   const { id } = req.query;
   //const { imageurl, articleimageid } = req.body;
   const { imageurl } = req.body;
@@ -32,11 +32,11 @@ const updateImage = async (req, res) => {
 };
 
 
-const deletImage = async (req, res) => {
+const deleteImage = async (req, res) => {
   try {
     const { id } = req.query;
     //throw new Error("Error-horror");
-    await pool.query("DELETE FROM article WHERE articleid = ?", [id]);
+    await pool.query("DELETE FROM articleimage WHERE articleid = ?", [id]);
     return res.status(204).json();
   } catch (error) {
     return res.status(500).json({ message: error.message });

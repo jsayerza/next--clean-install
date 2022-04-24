@@ -61,7 +61,7 @@ export function ArticleForm({ articleUpdateId = null }) {
 
 
   const getTables = async () => {
-    console.log("getTables")
+    //console.log("getTables")
     const { data: articleCategory } = await axios.get(
       HOST_SV + PORT_SV + "/api/tables",
       {
@@ -142,7 +142,7 @@ export function ArticleForm({ articleUpdateId = null }) {
       axios
         .get(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`)
         .then((res) => {
-          console.log("useEffect/res.data: ", res.data);
+          //console.log("useEffect/res.data: ", res.data);
           setUpdateArticle({
             articlecategoryid: res.data.articlecategoryid,
             articletitle: res.data.articletitle,
@@ -150,12 +150,10 @@ export function ArticleForm({ articleUpdateId = null }) {
             price: res.data.price,
             imageurl: res.data.imageurl,
             articlestatusid: res.data.articlestatusid,
-
             courseid: res.data.courseid,
             locationid: res.data.locationid,
             publicationstatusid: res.data.publicationstatusid,
             salestatusid: res.data.salestatusid,
-          
           });
         });
     }
@@ -243,14 +241,12 @@ export function ArticleForm({ articleUpdateId = null }) {
           articletitle: articleUpdateId ? updateArticle.articletitle : "",
           price: articleUpdateId ? updateArticle.price : 0,
           description: articleUpdateId ? updateArticle.description : "",
-          useremail: articleUpdateId ? updateArticle.useremail : "", 
+          //useremail: articleUpdateId ? updateArticle.useremail : "", 
           articlestatusid: articleUpdateId ? updateArticle.articlestatusid : 0,
-
           courseid: articleUpdateId ? updateArticle.courseid : 0,
           locationid: articleUpdateId ? updateArticle.locationid : 0,
           publicationstatusid: articleUpdateId ? updateArticle.publicationstatusid : 0,
           salestatusid: articleUpdateId ? updateArticle.salestatusid : 0,
-        
         }}
         validationSchema={
           new yup.ObjectSchema({
@@ -261,12 +257,12 @@ export function ArticleForm({ articleUpdateId = null }) {
         }
 
         onSubmit={(values, actions) => {
-          console.log("onSubmit/values: ", values);
+          //console.log("onSubmit/values: ", values);
           if (articleUpdateId !== null) {
-            console.log("onSubmit/PUT");
-            console.log("onSubmit/PUT/articleUpdateId: ", articleUpdateId);
-            console.log("onSubmit/PUT/updateArticle.imageurl: ", updateArticle.imageurl);
-            console.log("onSubmit/PUT/urlImg: ", urlImg);
+            //console.log("onSubmit/PUT");
+            //console.log("onSubmit/PUT/articleUpdateId: ", articleUpdateId);
+            //console.log("onSubmit/PUT/updateArticle.imageurl: ", updateArticle.imageurl);
+            //console.log("onSubmit/PUT/urlImg: ", urlImg);
             return axios
               .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
                 ...values,
@@ -276,7 +272,7 @@ export function ArticleForm({ articleUpdateId = null }) {
               .then((res) => {
                 //// Solo modificar la imágen si hay una nueva imágen para sustituir JSM 20220424
                 if (urlImg != "") {
-                  console.log("onSubmit/PUT/urlImg/entra!");
+                  //console.log("onSubmit/PUT/urlImg/entra!");
                   return axios
                   .put(HOST_SV + PORT_SV + `/api/articles/images/${articleUpdateId}`, {
                     imageurl: urlImg,
@@ -284,6 +280,8 @@ export function ArticleForm({ articleUpdateId = null }) {
                   })
                   .then((res) => router.push("/"))
                   .catch((e) => console.error("onSubmit PUT image error: ", e));
+                } else {
+                  router.push("/");
                 }
               })
               .catch((e) => console.log("onSubmit PUT article error: ", e));
@@ -677,7 +675,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             </div>
 
 
-            <div className="mb-4">
+{/*             <div className="mb-4">
               <label
                 htmlFor="useremail"
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -695,7 +693,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-
+ */}
 
             <button
               type="submit"

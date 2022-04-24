@@ -66,7 +66,7 @@ export const Home = ({ articles }) => {
         {searchResult === SEARCH_RESULT_STATE.NOT_FOUND ||
         search === SEARCH_STATE.EMPTY
           ? ""
-          : `Resultado de "${search}"`}
+          : `Resultat de "${search}"`}
       </h1>
       <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
         {searchResult?.length > 0 ? (
