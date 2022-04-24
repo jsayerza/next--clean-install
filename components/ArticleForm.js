@@ -280,7 +280,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                   return axios
                   .put(HOST_SV + PORT_SV + `/api/articles/images/${articleUpdateId}`, {
                     imageurl: urlImg,
-                    articleimageid: articleUpdateId,
+                    //articleimageid: articleUpdateId,
                   })
                   .then((res) => router.push("/"))
                   .catch((e) => console.error("onSubmit PUT image error: ", e));
@@ -299,7 +299,7 @@ export function ArticleForm({ articleUpdateId = null }) {
               .then((response) => {
                 //console.log(response.data);
                 return axios
-                  .post(HOST_SV + PORT_SV + "/api/articles/image", {
+                  .post(HOST_SV + PORT_SV + "/api/articles/images", {
                     articleId: response.data.articleid,
                     url: urlImg,
                   })
