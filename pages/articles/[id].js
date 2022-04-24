@@ -25,15 +25,15 @@ function ArticleView({article}) {
     return (
         <Layout>
 
-            <div class="flex flex-col">
-            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full">
+            <div className="flex flex-col">
+            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                <div className="overflow-hidden">
+                    <table className="min-w-full">
                         <tbody>
                             <tr>
                                 <td>
-                                    <table class="min-w-full">
+                                    <table className="min-w-full">
                                     <tbody>
                                         <tr>
                                             <td>
@@ -51,85 +51,85 @@ function ArticleView({article}) {
                                 </td>
 
                                 <td>
-                                    <table class="min-w-full">
+                                    <table className="min-w-full">
                                     <tbody>
-                                        <tr class="border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 Article:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.articletitle}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                             articlecategory: 
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.articlecategory}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 description:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.description}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 articlestatus:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.articlestatus}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 course:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.course}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 location:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.locationid} - {article.location}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 publicationstatus:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.publicationstatus}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 salesstatus:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.salestatus}
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 price:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {article.price} €
                                             </td>
                                         </tr>
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <tr className="bg-white border-b">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                 Referència:
                                             </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {/* ////TODO: Hay que mostrar el nombre del vendedor, no el email. 
                                                 2 opciones:
                                                 1. Guardar el nombre del vendedor en el article

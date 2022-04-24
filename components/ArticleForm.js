@@ -53,7 +53,8 @@ export function ArticleForm({ articleUpdateId = null }) {
       (err) => console.log(err),
       // si todo fue ok hacemos un callback con una promesa recuperando la url y la seteamos al estado
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(setUrlImg);
+        getDownloadURL(uploadTask.snapshot.ref)
+        .then(setUrlImg);
       }
     );
   };
@@ -263,32 +264,49 @@ export function ArticleForm({ articleUpdateId = null }) {
           console.log("onSubmit/values: ", values);
           if (articleUpdateId !== null) {
             console.log("onSubmit/PUT");
+            console.log("onSubmit/PUT/articleUpdateId: ", articleUpdateId);
+            console.log("onSubmit/PUT/updateArticle.imageurl: ", updateArticle.imageurl);
+            console.log("onSubmit/PUT/urlImg: ", urlImg);
             return axios
               .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
                 ...values,
                 useremail: `${user.email}`
               })
-              .then((res) => router.push("/"));
+              //.then((res) => router.push("/"));
+              .then((res) => {
+                //// Solo modificar la imágen si hay una nueva imágen para sustituir JSM 20220424
+                if (urlImg != "") {
+                  console.log("onSubmit/PUT/urlImg/entra!");
+                  return axios
+                  .put(HOST_SV + PORT_SV + `/api/articles/images/${articleUpdateId}`, {
+                    imageurl: urlImg,
+                    articleimageid: articleUpdateId,
+                  })
+                  .then((res) => router.push("/"))
+                  .catch((e) => console.error("onSubmit PUT image error: ", e));
+                }
+              })
+              .catch((e) => console.log("onSubmit PUT article error: ", e));
           } else {
-            console.log("onSubmit/POST");
-            console.log("onSubmit/POST/values: ", values);
-            console.log("onSubmit/POST/`${user.email}`: ", `${user.email}`);
+            //console.log("onSubmit/POST");
+            //console.log("onSubmit/POST/values: ", values);
+            //console.log("onSubmit/POST/`${user.email}`: ", `${user.email}`);
             return axios
               .post(HOST_SV + PORT_SV + "/api/articles", {
                 ...values,
                 useremail: `${user.email}`
               })
               .then((response) => {
-                console.log(response.data);
+                //console.log(response.data);
                 return axios
                   .post(HOST_SV + PORT_SV + "/api/articles/image", {
                     articleId: response.data.articleid,
                     url: urlImg,
                   })
                   .then((res) => router.push("/"))
-                  .catch((e) => console.error("onSubmit image error: ", e));
+                  .catch((e) => console.error("onSubmit POST image error: ", e));
               })
-              .catch((e) => console.log("onSubmit article error: ", e));
+              .catch((e) => console.log("onSubmit POST article error: ", e));
           }
         }}
 
@@ -547,9 +565,18 @@ export function ArticleForm({ articleUpdateId = null }) {
                       value={list.locationid}
                       label={list.location}
                     >
-                      {list.location}
+                      {list.location} {list.locationid}
                     </option>
                   ))}
+
+                    <option
+                      key={99999}
+                      value={99999}
+                      label="Altres"
+                    >
+                      Altres
+                    </option>
+
               </Field>
             </div>
 
@@ -599,7 +626,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                 htmlFor="price"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Preu (donació = 0€):
+                Preu (0€ = donació):
               </label>
               <ErrorMessage
                 component="p"

@@ -10,10 +10,10 @@ export function ArticleCard({article}) {
         <p>{article.articlecategory}</p>
         <p>{article.description}</p>
         <p>{article.articlestatus}</p>
-        <p>{article.courseid}</p>
-        <p>{article.locationid}</p>
-        <p>{article.publicationstatusid}</p>
-        <p>{article.salestatusid}</p>
+        <p>{article.course}</p>
+        <p>{article.location}</p>
+        <p>{article.publicationstatus}</p>
+        <p>{article.salestatus}</p>
         <p>{article.price} €</p>
 
         <div className="flex flex-wrap justify-center">

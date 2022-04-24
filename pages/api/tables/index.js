@@ -61,7 +61,8 @@ const getCourse = async (req, res) => {
 
 const getLocation = async (req, res) => {
   try {
-    const [result] = await pool.query("SELECT * FROM location");
+    //const [result] = await pool.query("SELECT * FROM location ORDER BY location");
+    const [result] = await pool.query("SELECT locationid, CONCAT(location, ' (', locationid, ')') AS location FROM location ORDER BY location");
     return res.status(200).json(result);
   } catch (error) {
       return res.status(500).json({error});
