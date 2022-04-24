@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BadgeStatus } from "./BadgeStatus";
 
 export function ArticleCard({ article }) {
+  console.log(article.imageurl);
   return (
     <Link href={`/articles/${article.articleid}`} key={article.articleid}>
       <a>
@@ -9,7 +11,6 @@ export function ArticleCard({ article }) {
           <div className="flex flex-wrap justify-center">
             {article.imageurl ? (
               <Image
-                lazy={true}
                 src={article.imageurl}
                 width={432}
                 height={345}
@@ -31,9 +32,7 @@ export function ArticleCard({ article }) {
             <p className="font-bold text-gray-800 py-4 text-lg">
               {article.description}
             </p>
-            <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
-              {article.articlestatus}
-            </span>
+            <BadgeStatus status={article.articlestatus} />
             <h3 className="font-semibold text-gray-800 text-lg py-1">
               {article.course}
             </h3>
