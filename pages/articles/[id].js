@@ -30,7 +30,7 @@ function ArticleView({ article }) {
 
   return (
     <Layout>
-      <div className="flex">
+      <div className="flex flex-col gap-4 md:flex-row">
         <div className="flex-1 w-full" px-5 pr-5>
           {article.imageurl ? (
             <Image
