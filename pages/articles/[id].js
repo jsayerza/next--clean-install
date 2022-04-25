@@ -105,7 +105,7 @@ function ArticleView({ article }) {
           {user.email !== article.useremail && (
             <div className="my-12 flex justify-center">
               <button
-                className="bg-cyan-600 hover:bg-gray-800 text-white text-lg font-bold rounded ml-2 py-3"
+                className="bg-cyan-600 hover:bg-gray-800 text-white text-lg font-bold rounded ml-2 py-3 px-5"
                 onClick={() => router.push(`mailto:${article.useremail}`)}
               >
                 Contacta amb el venedor
