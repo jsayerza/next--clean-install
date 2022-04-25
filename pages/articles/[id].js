@@ -31,7 +31,7 @@ function ArticleView({ article }) {
   return (
     <Layout>
       <div className="flex">
-        <div className="flex-1 w-full">
+        <div className="flex-1 w-full" px-5 pr-5>
           {article.imageurl ? (
             <Image
               src={article.imageurl}
@@ -43,7 +43,7 @@ function ArticleView({ article }) {
             "no hay imagen"
           )}
         </div>
-        <div className="flex-1 w-full flex-col">
+        <div className="flex-1 w-full flex-col" pl-5>
           <div className="py-4 text-3xl text-gray-900 font-bold flex justify-between items-center">
             <h1>{article.articletitle}</h1>
             <h2>{article.price}€</h2>
@@ -51,7 +51,7 @@ function ArticleView({ article }) {
 
           <div className="py-4 border-gray-200 border-b">
             <h2 className="text-lg text-gray-900 font-semibold pb-2">
-              Description
+              Descripció:
             </h2>
             <p className="text-lg text-gray-600 font-semibold">
               {article.description}
@@ -61,7 +61,7 @@ function ArticleView({ article }) {
           <div className="py-2 flex justify-around items-center gap-4 my-4">
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Status
+                Estat de l'article:
               </h2>
               <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
                 {article.articlestatus}
@@ -70,10 +70,10 @@ function ArticleView({ article }) {
 
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Location
+                Ubicació de l'article:
               </h2>
               <h2 className="text-lg text-gray-900 font-bold pb-2">
-                {article.location}
+                {article.location} ({article.locationid})
               </h2>
             </div>
           </div>
@@ -81,7 +81,7 @@ function ArticleView({ article }) {
           <div className="py-2 flex justify-around items-center gap-4 my-4">
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Publication Status
+                Estat de publicació:
               </h2>
               <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
                 {article.publicationstatus}
@@ -90,7 +90,7 @@ function ArticleView({ article }) {
 
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Sale status
+                Estat de venda:
               </h2>
               <h2 className="text-lg text-gray-900 font-bold pb-2">
                 {article.salestatus}

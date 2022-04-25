@@ -37,7 +37,7 @@ export function ArticleCard({ article }) {
               {article.course}
             </h3>
             <h3 className="font-semibold text-gray-800 text-lg">
-              {article.location}
+              {article.location} ({article.locationid})
             </h3>
             <h3 className="font-semibold text-lg">
               {article.publicationstatus}
