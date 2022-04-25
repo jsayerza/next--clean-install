@@ -29,20 +29,23 @@ export function ArticleCard({ article }) {
               </h1>
             </div>
             <h3 className="text-md font-semibold">{article.articlecategory}</h3>
+            <div className="flex flex-col gap-1 justify-start items-start">
+              <span className="font-semibold text-gray-800">Status:</span>
+              <BadgeStatus status={article.articlestatus} />
+            </div>
             <p className="font-bold text-gray-800 py-4 text-lg">
               {article.description}
             </p>
-            <BadgeStatus status={article.articlestatus} />
-            <h3 className="font-semibold text-gray-800 text-lg py-1">
-              {article.course}
-            </h3>
-            <h3 className="font-semibold text-gray-800 text-lg">
-              {article.location} ({article.locationid})
-            </h3>
-            <h3 className="font-semibold text-lg">
-              {article.publicationstatus}
-            </h3>
-            <h2>{article.salestatus}</h2>
+            <div className="flex gap-2 font-semibold text-gray-800 text-lg py-1">
+              <h3>Course: </h3>
+              <h3>{article.course}</h3>
+            </div>
+            <div className="flex gap-2 font-semibold text-gray-800 text-lg py-1">
+              <h3>Location: </h3>
+              <h3>
+                {article.location} ({article.locationid})
+              </h3>
+            </div>
             <h2 className="text-right text-2xl font-semibold">
               {article.price} €
             </h2>
