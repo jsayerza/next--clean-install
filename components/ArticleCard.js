@@ -20,30 +20,30 @@ function ArticleCard({ article }) {
                 alt="image of the article"
               />
             ) : (
-              "No hay imagen"
+              "No hi ha imatge"
             )}
           </div>
           <div className="p-5">
+            <h3 className="text-md font-semibold">{article.articlecategory}</h3>
             <div className="py-2">
               <h1 className="text-2xl font-bold text-center text-gray-900">
                 {article.articletitle}
               </h1>
             </div>
-            <h3 className="text-md font-semibold">{article.articlecategory}</h3>
-            <div className="flex flex-col gap-1 justify-start items-start">
-              <span className="font-semibold text-gray-800">Status:</span>
-              <BadgeStatus status={article.articlestatus} />
-            </div>
             <p className="font-bold text-gray-800 py-4 text-lg">
               {article.description}
             </p>
-            <div className="flex gap-2 font-semibold text-gray-800 text-lg py-1">
-              <h3>Course: </h3>
-              <h3>{article.course}</h3>
+            <div className="flex flex-col gap-1 justify-start items-start">
+              <span className="font-semibold text-gray-800">Estat de conservació:</span>
+              <BadgeStatus status={article.articlestatus} />
             </div>
-            <div className="flex gap-2 font-semibold text-gray-800 text-lg py-1">
-              <h3>Location: </h3>
-              <h3>
+            <div className="flex gap-2 py-1">
+              <p className="font-semibold text-gray-800">Curs:</p>
+              <h3 className="font-semibold text-gray-800 text-lg">{article.course}</h3>
+            </div>
+            <div className="flex gap-2 py-1">
+              <p className="font-semibold text-gray-800">Ubicació:</p>
+              <h3 className="font-semibold text-gray-800 text-lg">
                 {article.location} ({article.locationid})
               </h3>
             </div>

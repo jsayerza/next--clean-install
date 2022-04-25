@@ -54,7 +54,7 @@ export const Home = ({ articles }) => {
       <>
         <SearchBar change={handleChange} />
         <h1 className="text-center text-2xl font-bold">
-          No se encontraron resultados de {`"${search}"`}
+          No hi ha resultats de {`"${search}"`}
         </h1>
       </>
     );

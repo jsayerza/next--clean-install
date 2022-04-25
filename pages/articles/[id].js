@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { HOST_SV, PORT_SV } from "config/config";
 import { Layout } from "../../components/Layout";
 import Image from "next/image";
+import { BadgeStatus } from "components/BadgeStatus";
 //import ButtonMailto from "components/ButtonMailTo";
 
 function ArticleView({ article }) {
@@ -31,7 +32,7 @@ function ArticleView({ article }) {
   return (
     <Layout>
       <div className="flex flex-col gap-4 md:flex-row">
-        <div className="flex-1 w-full" px-5 pr-5>
+        <div className="flex-1 w-full" pr-5>
           {article.imageurl ? (
             <Image
               src={article.imageurl}
@@ -63,9 +64,12 @@ function ArticleView({ article }) {
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
                 Estat de l'article:
               </h2>
-              <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
+{/*               <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
                 {article.articlestatus}
               </span>
+ */}              
+               <BadgeStatus status={article.articlestatus} />
+
             </div>
 
             <div>
@@ -95,12 +99,13 @@ function ArticleView({ article }) {
               <h2 className="text-lg text-gray-900 font-bold pb-2">
                 {article.salestatus}
               </h2>
+              
             </div>
           </div>
 
           <div className="my-12 flex justify-center">
             <button
-              className="bg-cyan-600 hover:bg-gray-800 text-white text-lg font-bold rounded ml-2 px-5 py-3"
+              className="bg-cyan-600 hover:bg-gray-800 text-white text-lg font-bold rounded ml-2 py-3"
               onClick={() => router.push(`mailto:${article.useremail}`)}
             >
               Contacta amb el venedor
@@ -117,7 +122,7 @@ function ArticleView({ article }) {
           Elimina article
         </button>
         <button
-          className="bg-gray-500 hover:bg-gray-800 text-white rounded ml-2 px-5 py-2"
+          className="bg-gray-500 hover:bg-gray-800 text-white rounded ml-2 py-2"
           onClick={() => {
             //console.log("ArticleView/article.articleid: ", article.articleid)
             router.push("/articles/edit/" + article.articleid);
