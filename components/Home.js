@@ -3,7 +3,7 @@ import axios from "axios";
 import { HOST_SV, PORT_SV } from "config/config";
 import SearchBar from "components/SearchBar";
 import { SearchResults } from "components/SearchResults";
-import { ArticleCard } from "components/ArticleCard";
+import ArticleCard from "components/ArticleCard";
 import debounce from "just-debounce-it";
 
 const SEARCH_STATE = {
@@ -38,6 +38,7 @@ export const Home = ({ articles }) => {
         if (response.data.length === 0) {
           return setSearchResult(null);
         }
+        console.log(response.data);
         return setSearchResult(response.data);
       }
       return setSearchResult(articles);
