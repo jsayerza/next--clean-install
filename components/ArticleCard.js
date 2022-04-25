@@ -1,8 +1,9 @@
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BadgeStatus } from "./BadgeStatus";
 
-export function ArticleCard({ article }) {
+function ArticleCard({ article }) {
   console.log(article.imageurl);
   return (
     <Link href={`/articles/${article.articleid}`} key={article.articleid}>
@@ -55,3 +56,5 @@ export function ArticleCard({ article }) {
     </Link>
   );
 }
+
+export default React.memo(ArticleCard);
