@@ -14,7 +14,8 @@ export default async function handler(req, res) {
 const getArticles = async (req, res) => {
   try {
     /* const [result] = await pool.query("SELECT * FROM v_article"); */
-    const [result] = await pool.query("SELECT * FROM v_article ORDER BY datecreation DESC");
+/*     const [result] = await pool.query("SELECT * FROM v_article ORDER BY datecreation DESC"); */
+    const [result] = await pool.query("SELECT * FROM v_article_sell ORDER BY datecreation DESC");
     
     //console.log(result);
     return res.status(200).json(result);
