@@ -23,7 +23,7 @@ export function Navbar() {
             </span>
           </a>
         </Link>
-        <div className="flex items-center md:order-2">
+        <div className="flex items-center md:order-2 md:hidden">
           <button
             type="button"
             className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -144,7 +144,7 @@ export function Navbar() {
             </li>
             <li>
               {data?.user ? (
-                <div className="rounded-full">
+                <div className="rounded-full hover:cursor-pointer">
                   <img
                     onClick={() => signOut()}
                     src={data?.user.image}
