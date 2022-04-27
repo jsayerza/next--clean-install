@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import ArticleCard from "components/ArticleCard";
 import { map } from "@firebase/util";
+import ArticleList from "components/ArticleList";
 
 function ProfilePage() {
   const router = useRouter();
@@ -33,10 +34,8 @@ function ProfilePage() {
   return (
     <Layout>
       <h1 className="text-left text-2xl font-bold my-2">Your Articles</h1>
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
-        {profileArticles.map((article) => (
-          <ArticleCard key={article.articleid} article={article} />
-        ))}
+      <div>
+        <ArticleList articles={profileArticles} />
       </div>
     </Layout>
   );
