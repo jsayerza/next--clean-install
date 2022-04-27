@@ -25,6 +25,15 @@ export default function ArticleList({ articles }) {
             </div>
 
             <div className="flex flex-col justify-center items-center py-4 px-8">
+              <h1 className="textl-lg font-semibold text-gray-900">
+                {article.articletitle}
+              </h1>
+              <p className="text-sm font-semibold text-gray-500">
+                {article.description}
+              </p>
+            </div>
+
+            <div className="flex flex-col justify-center items-center py-4 px-8">
               <h1 className="textl-lg font-semibold text-gray-900">Price</h1>
               <h2 className="text-xl font-bold">{article.price}€</h2>
             </div>
