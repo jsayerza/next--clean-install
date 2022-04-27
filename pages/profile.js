@@ -33,7 +33,7 @@ function ProfilePage() {
 
   return (
     <Layout>
-      <h1 className="text-left text-2xl font-bold my-2">Your Articles</h1>
+      <h1 className="text-left text-2xl font-bold my-2">Els teus articles</h1>
       <div>
         <ArticleList articles={profileArticles} />
       </div>

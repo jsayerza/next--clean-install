@@ -674,7 +674,7 @@ export function ArticleForm({ articleUpdateId = null }) {
               type="submit"
               className="bg-emerald-500 hover:bg-emerald-700 py-2 px-4 rounded focus:outline-none focus:shadow-outline font-bold text-white"
             >
-              {articleUpdateId ? "Editar" : "Crear"}
+              {articleUpdateId ? "Actualitzar" : "Afegir"}
             </button>
           </Form>
         )}

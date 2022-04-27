@@ -85,7 +85,7 @@ function ArticleView({ article }) {
           </div>
 
           <div className="py-2 flex justify-around items-center gap-4 my-4">
-            <div>
+{/*             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
                 Estat de publicació:
               </h2>
@@ -93,7 +93,7 @@ function ArticleView({ article }) {
                 {article.publicationstatus}
               </span>
             </div>
-
+ */}
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
                 Estat de venda:

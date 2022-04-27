@@ -17,7 +17,7 @@ const getProfileArticles = async (req, res) => {
     if (session) {
       const [result] = await pool.query(
         `
-        SELECT * FROM v_article_sell  WHERE useremail = '${session.user.email}' ORDER BY datecreation DESC
+        SELECT * FROM v_article  WHERE useremail = '${session.user.email}' ORDER BY datecreation DESC
         `
       );
 
@@ -25,12 +25,12 @@ const getProfileArticles = async (req, res) => {
     } else {
       console.log(session)
       return res.status(401).json({
-        error: "You trying to do something bad or your not logged in",
+        error: "Has intentat fer alguna acció incorrecta o no estàs identificat",
       });
     }
   } catch (e) {
     return res
       .status(500)
-      .json({ error: "You trying to do something bad or your not logged in" });
+      .json({ error: "Has intentat fer alguna acció incorrecta o no estàs identificat" });
   }
 };
