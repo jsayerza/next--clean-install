@@ -6,13 +6,14 @@ import { HOST_SV, PORT_SV } from "config/config";
 import { Layout } from "../../components/Layout";
 import Image from "next/image";
 import { BadgeStatus } from "components/BadgeStatus";
-import { useUser } from "context/authContext";
+import { useSession } from "next-auth/react";
+// import { useUser } from "context/authContext";
 //import ButtonMailto from "components/ButtonMailTo";
 
 function ArticleView({ article }) {
-  const { user } = useUser();
-  console.log(user);
-
+  // const { user } = useUser();
+  // console.log(user);
+  const { data } = useSession();
   const router = useRouter();
 
   const handleDelete = async (id) => {
@@ -103,7 +104,7 @@ function ArticleView({ article }) {
             </div>
           </div>
 
-          {user && user.email !== article.useremail && (
+          {data && data.user.email !== article.useremail && (
             <div className="my-12 flex justify-center">
               <button
                 className="bg-cyan-600 hover:bg-gray-800 text-white text-lg font-bold rounded ml-2 py-3 px-5"
@@ -116,7 +117,7 @@ function ArticleView({ article }) {
         </div>
       </div>
 
-      {user && user.email === article.useremail && (
+      {data && data.user.email === article.useremail && (
         <div className="py-5">
           <button
             className="bg-red-500 hover:bg-red-700 text-white rounded px-3 py-2"
