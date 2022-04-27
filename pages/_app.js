@@ -1,12 +1,13 @@
-import { AuthContextProvider } from "../context/authContext";
+import { SessionProvider } from "next-auth/react";
+// import { AuthContextProvider } from "../context/authContext";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <AuthContextProvider>
+    <SessionProvider session={session} refetchInterval={5 * 60}>
       <Component {...pageProps} />
-    </AuthContextProvider>
+    </SessionProvider>
   );
 }
 
