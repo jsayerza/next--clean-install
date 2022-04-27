@@ -1,8 +1,12 @@
-import { useUser } from "context/authContext";
+// import { useUser } from "context/authContext";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 import Link from "next/link";
 
 export function Navbar() {
-  const { user, handleGoogleLogin } = useUser();
+  const { data } = useSession();
+  console.log(data);
+  // const { user, handleGoogleLogin } = useUser();
 
   return (
     <nav className="bg-emerald-600 border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
@@ -139,17 +143,18 @@ export function Navbar() {
               </Link>
             </li>
             <li>
-              {user ? (
+              {data?.user ? (
                 <div className="rounded-full">
                   <img
-                    src={user.avatar}
+                    onClick={() => signOut()}
+                    src={data.user.image}
                     alt="avatar image"
                     className="h-10 w-10 rounded-full"
                   />
                 </div>
               ) : (
                 <button
-                  onClick={handleGoogleLogin}
+                  onClick={signIn}
                   className="block py-2 px-4 text-white border-white rounded "
                 >
                   Login
