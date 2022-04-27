@@ -2,19 +2,22 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { Formik, Form, Field, ErrorMessage, useField  } from "formik";
+import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 import * as yup from "yup";
 import { getDownloadURL } from "firebase/storage";
 
 import { uploadImage } from "../firebase/client";
-import { useUser } from "context/authContext";
+// import { useUser } from "context/authContext";
+import { useSession } from "next-auth/react";
 import { HOST_SV, PORT_SV } from "config/config";
 
 export function ArticleForm({ articleUpdateId = null }) {
   //console.log("articleUpdateId: ", articleUpdateId);
 
   const router = useRouter();
-  const { user } = useUser();
+  // const { user } = useUser();
+  const { data } = useSession();
+  console.log(data);
   //console.log("ArticleForm/user.email: ", user.email)
   //console.log("ArticleForm/user: ", user)
 
@@ -29,7 +32,6 @@ export function ArticleForm({ articleUpdateId = null }) {
     locationid: 0,
     publicationstatusid: 0,
     salestatusid: 0,
-
   });
 
   const [urlImg, setUrlImg] = useState("");
@@ -53,12 +55,10 @@ export function ArticleForm({ articleUpdateId = null }) {
       (err) => console.log(err),
       // si todo fue ok hacemos un callback con una promesa recuperando la url y la seteamos al estado
       () => {
-        getDownloadURL(uploadTask.snapshot.ref)
-        .then(setUrlImg);
+        getDownloadURL(uploadTask.snapshot.ref).then(setUrlImg);
       }
     );
   };
-
 
   const getTables = async () => {
     //console.log("getTables")
@@ -127,7 +127,6 @@ export function ArticleForm({ articleUpdateId = null }) {
     );
     //console.log("saleStatus: ", saleStatus);
     setSaleStatus(saleStatus);
-
   };
 
   ////TODO: revisar esto. ¿carga varias veces?
@@ -135,7 +134,6 @@ export function ArticleForm({ articleUpdateId = null }) {
     //console.log("articleCategory.length: ", articleCategory.length);
     getTables();
   }
-
 
   useEffect(() => {
     if (articleUpdateId !== null) {
@@ -159,7 +157,7 @@ export function ArticleForm({ articleUpdateId = null }) {
     }
   }, [articleUpdateId]);
 
-/*   const MySelect = ({ label, ...props }) => {
+  /*   const MySelect = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
       <div>
@@ -178,7 +176,7 @@ export function ArticleForm({ articleUpdateId = null }) {
   };
  */
 
-/*   const MySelect = ({ label, name, table, key, optionlabel }) => {
+  /*   const MySelect = ({ label, name, table, key, optionlabel }) => {
 
     //label="Categoria: " 
     //name="articlecategoryid"
@@ -232,20 +230,23 @@ export function ArticleForm({ articleUpdateId = null }) {
   };
  */
 
-
   return (
     <div className="w-full max-w-xs">
       <Formik
         initialValues={{
-          articlecategoryid: articleUpdateId ? updateArticle.articlecategoryid : 0,
+          articlecategoryid: articleUpdateId
+            ? updateArticle.articlecategoryid
+            : 0,
           articletitle: articleUpdateId ? updateArticle.articletitle : "",
           price: articleUpdateId ? updateArticle.price : 0,
           description: articleUpdateId ? updateArticle.description : "",
-          //useremail: articleUpdateId ? updateArticle.useremail : "", 
+          //useremail: articleUpdateId ? updateArticle.useremail : "",
           articlestatusid: articleUpdateId ? updateArticle.articlestatusid : 0,
           courseid: articleUpdateId ? updateArticle.courseid : 0,
           locationid: articleUpdateId ? updateArticle.locationid : 0,
-          publicationstatusid: articleUpdateId ? updateArticle.publicationstatusid : 0,
+          publicationstatusid: articleUpdateId
+            ? updateArticle.publicationstatusid
+            : 0,
           salestatusid: articleUpdateId ? updateArticle.salestatusid : 0,
         }}
         validationSchema={
@@ -255,7 +256,6 @@ export function ArticleForm({ articleUpdateId = null }) {
             description: yup.string().required("Description is required"),
           })
         }
-
         onSubmit={(values, actions) => {
           //console.log("onSubmit/values: ", values);
           if (articleUpdateId !== null) {
@@ -263,28 +263,37 @@ export function ArticleForm({ articleUpdateId = null }) {
             //console.log("onSubmit/PUT/articleUpdateId: ", articleUpdateId);
             //console.log("onSubmit/PUT/updateArticle.imageurl: ", updateArticle.imageurl);
             //console.log("onSubmit/PUT/urlImg: ", urlImg);
-            return axios
-              .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
-                ...values,
-                useremail: `${user.email}`
-              })
-              //.then((res) => router.push("/"));
-              .then((res) => {
-                //// Solo modificar la imágen si hay una nueva imágen para sustituir JSM 20220424
-                if (urlImg != "") {
-                  //console.log("onSubmit/PUT/urlImg/entra!");
-                  return axios
-                  .put(HOST_SV + PORT_SV + `/api/articles/images/${articleUpdateId}`, {
-                    imageurl: urlImg,
-                    //articleimageid: articleUpdateId,
-                  })
-                  .then((res) => router.push("/"))
-                  .catch((e) => console.error("onSubmit PUT image error: ", e));
-                } else {
-                  router.push("/");
-                }
-              })
-              .catch((e) => console.log("onSubmit PUT article error: ", e));
+            return (
+              axios
+                .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
+                  ...values,
+                  useremail: `${data?.user?.email}`,
+                })
+                //.then((res) => router.push("/"));
+                .then((res) => {
+                  //// Solo modificar la imágen si hay una nueva imágen para sustituir JSM 20220424
+                  if (urlImg != "") {
+                    //console.log("onSubmit/PUT/urlImg/entra!");
+                    return axios
+                      .put(
+                        HOST_SV +
+                          PORT_SV +
+                          `/api/articles/images/${articleUpdateId}`,
+                        {
+                          imageurl: urlImg,
+                          //articleimageid: articleUpdateId,
+                        }
+                      )
+                      .then((res) => router.push("/"))
+                      .catch((e) =>
+                        console.error("onSubmit PUT image error: ", e)
+                      );
+                  } else {
+                    router.push("/");
+                  }
+                })
+                .catch((e) => console.log("onSubmit PUT article error: ", e))
+            );
           } else {
             //console.log("onSubmit/POST");
             //console.log("onSubmit/POST/values: ", values);
@@ -292,7 +301,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             return axios
               .post(HOST_SV + PORT_SV + "/api/articles", {
                 ...values,
-                useremail: `${user.email}`
+                useremail: `${data?.user?.email}`,
               })
               .then((response) => {
                 //console.log(response.data);
@@ -302,12 +311,13 @@ export function ArticleForm({ articleUpdateId = null }) {
                     url: urlImg,
                   })
                   .then((res) => router.push("/"))
-                  .catch((e) => console.error("onSubmit POST image error: ", e));
+                  .catch((e) =>
+                    console.error("onSubmit POST image error: ", e)
+                  );
               })
               .catch((e) => console.log("onSubmit POST article error: ", e));
           }
         }}
-
         enableReinitialize
       >
         {({ handleSubmit, setFieldValue }) => (
@@ -321,7 +331,7 @@ export function ArticleForm({ articleUpdateId = null }) {
               <h1 className="mb-4 text-3xl font-bold">Afegir article</h1>
             )}
 
-{/*             <div className="mb-4">
+            {/*             <div className="mb-4">
               <MySelect 
                 label="Categoria: " 
                 name="articlecategoryid"
@@ -339,7 +349,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             </div>
  */}
 
-{/*             <div className="mb-4">
+            {/*             <div className="mb-4">
               <MySelect 
                 label="Categoria: " 
                 name="articlecategoryid"
@@ -356,7 +366,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                 htmlFor="articlecategoryid"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Categoria: 
+                Categoria:
               </label>
               <ErrorMessage
                 component="p"
@@ -370,23 +380,19 @@ export function ArticleForm({ articleUpdateId = null }) {
                 multiple={false}
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                    <option
-                      key={0}
-                      value={0}
-                      label="Selecciona..."
-                    >
-                      Selecciona...
-                    </option>
-                  
+                <option key={0} value={0} label="Selecciona...">
+                  Selecciona...
+                </option>
+
                 {articleCategory.map((category) => (
-                    <option
-                      key={category.articlecategoryid}
-                      value={category.articlecategoryid}
-                      label={category.articlecategory}
-                    >
-                      {category.articlecategory}
-                    </option>
-                  ))}
+                  <option
+                    key={category.articlecategoryid}
+                    value={category.articlecategoryid}
+                    label={category.articlecategory}
+                  >
+                    {category.articlecategory}
+                  </option>
+                ))}
               </Field>
             </div>
 
@@ -418,17 +424,17 @@ export function ArticleForm({ articleUpdateId = null }) {
                 }
               />
             </div>
-            {updateArticle.imageurl ? 
+            {updateArticle.imageurl ? (
               <div className="flex flex-wrap justify-center">
                 <img
                   src={updateArticle.imageurl}
                   className="max-w-full h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
                   alt="..."
                 />
-            </div>            
-          : 
-            <div></div>
-            }
+              </div>
+            ) : (
+              <div></div>
+            )}
 
             <div className="mb-4">
               <label
@@ -455,7 +461,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                 htmlFor="courseid"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Curs escolar: 
+                Curs escolar:
               </label>
               <ErrorMessage
                 component="p"
@@ -469,33 +475,28 @@ export function ArticleForm({ articleUpdateId = null }) {
                 multiple={false}
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                    <option
-                      key={0}
-                      value={0}
-                      label="Selecciona..."
-                    >
-                      Selecciona...
-                    </option>
-                  
+                <option key={0} value={0} label="Selecciona...">
+                  Selecciona...
+                </option>
+
                 {course.map((list) => (
-                    <option
-                      key={list.courseid}
-                      value={list.courseid}
-                      label={list.course}
-                    >
-                      {list.course}
-                    </option>
-                  ))}
+                  <option
+                    key={list.courseid}
+                    value={list.courseid}
+                    label={list.course}
+                  >
+                    {list.course}
+                  </option>
+                ))}
               </Field>
             </div>
-
 
             <div className="mb-4">
               <label
                 htmlFor="articlestatusid"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Estat de conservació: 
+                Estat de conservació:
               </label>
               <ErrorMessage
                 component="p"
@@ -509,33 +510,28 @@ export function ArticleForm({ articleUpdateId = null }) {
                 multiple={false}
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                    <option
-                      key={0}
-                      value={0}
-                      label="Selecciona..."
-                    >
-                      Selecciona...
-                    </option>
-                  
+                <option key={0} value={0} label="Selecciona...">
+                  Selecciona...
+                </option>
+
                 {articleStatus.map((list) => (
-                    <option
-                      key={list.articlestatusid}
-                      value={list.articlestatusid}
-                      label={list.articlestatus}
-                    >
-                      {list.articlestatus}
-                    </option>
-                  ))}
+                  <option
+                    key={list.articlestatusid}
+                    value={list.articlestatusid}
+                    label={list.articlestatus}
+                  >
+                    {list.articlestatus}
+                  </option>
+                ))}
               </Field>
             </div>
-
 
             <div className="mb-4">
               <label
                 htmlFor="locationid"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Localitat (ubicació): 
+                Localitat (ubicació):
               </label>
               <ErrorMessage
                 component="p"
@@ -549,42 +545,32 @@ export function ArticleForm({ articleUpdateId = null }) {
                 multiple={false}
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                    <option
-                      key={0}
-                      value={0}
-                      label="Selecciona..."
-                    >
-                      Selecciona...
-                    </option>
-                  
+                <option key={0} value={0} label="Selecciona...">
+                  Selecciona...
+                </option>
+
                 {location.map((list) => (
-                    <option
-                      key={list.locationid}
-                      value={list.locationid}
-                      label={list.location}
-                    >
-                      {list.location} {list.locationid}
-                    </option>
-                  ))}
+                  <option
+                    key={list.locationid}
+                    value={list.locationid}
+                    label={list.location}
+                  >
+                    {list.location} {list.locationid}
+                  </option>
+                ))}
 
-                    <option
-                      key={99999}
-                      value={99999}
-                      label="Altres"
-                    >
-                      Altres
-                    </option>
-
+                <option key={99999} value={99999} label="Altres">
+                  Altres
+                </option>
               </Field>
             </div>
-
 
             <div className="mb-4">
               <label
                 htmlFor="publicationstatusid"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Estat de publicació: 
+                Estat de publicació:
               </label>
               <ErrorMessage
                 component="p"
@@ -598,26 +584,21 @@ export function ArticleForm({ articleUpdateId = null }) {
                 multiple={false}
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                    <option
-                      key={0}
-                      value={0}
-                      label="Selecciona..."
-                    >
-                      Selecciona...
-                    </option>
-                  
+                <option key={0} value={0} label="Selecciona...">
+                  Selecciona...
+                </option>
+
                 {publicationStatus.map((list) => (
-                    <option
-                      key={list.publicationstatusid}
-                      value={list.publicationstatusid}
-                      label={list.publicationstatus}
-                    >
-                      {list.publicationstatus}
-                    </option>
-                  ))}
+                  <option
+                    key={list.publicationstatusid}
+                    value={list.publicationstatusid}
+                    label={list.publicationstatus}
+                  >
+                    {list.publicationstatus}
+                  </option>
+                ))}
               </Field>
             </div>
-
 
             <div className="mb-4">
               <label
@@ -631,16 +612,15 @@ export function ArticleForm({ articleUpdateId = null }) {
                 className="text-xl text-left text-red-500"
                 name="price"
               />
-              <Field name="price" type="number" className="text-right"/>€
+              <Field name="price" type="number" className="text-right" />€
             </div>
-
 
             <div className="mb-4">
               <label
                 htmlFor="salestatusid"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Estat de venda: 
+                Estat de venda:
               </label>
               <ErrorMessage
                 component="p"
@@ -654,28 +634,23 @@ export function ArticleForm({ articleUpdateId = null }) {
                 multiple={false}
                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                    <option
-                      key={0}
-                      value={0}
-                      label="Selecciona..."
-                    >
-                      Selecciona...
-                    </option>
-                  
+                <option key={0} value={0} label="Selecciona...">
+                  Selecciona...
+                </option>
+
                 {saleStatus.map((list) => (
-                    <option
-                      key={list.salestatusid}
-                      value={list.salestatusid}
-                      label={list.salestatus}
-                    >
-                      {list.salestatus}
-                    </option>
-                  ))}
+                  <option
+                    key={list.salestatusid}
+                    value={list.salestatusid}
+                    label={list.salestatus}
+                  >
+                    {list.salestatus}
+                  </option>
+                ))}
               </Field>
             </div>
 
-
-{/*             <div className="mb-4">
+            {/*             <div className="mb-4">
               <label
                 htmlFor="useremail"
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -707,4 +682,3 @@ export function ArticleForm({ articleUpdateId = null }) {
     </div>
   );
 }
-
