@@ -129,7 +129,7 @@ export function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="/new">
+              <Link href="/profile">
                 <a className="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                   El meu escolapop
                 </a>
@@ -147,7 +147,7 @@ export function Navbar() {
                 <div className="rounded-full">
                   <img
                     onClick={() => signOut()}
-                    src={data.user.image}
+                    src={data?.user.image}
                     alt="avatar image"
                     className="h-10 w-10 rounded-full"
                   />
