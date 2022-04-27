@@ -65,13 +65,11 @@ function ArticleView({ article }) {
           <div className="py-2 flex justify-around items-center gap-4 my-4">
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Estat de l'article:
+                Curs:
               </h2>
-              {/*               <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
-                {article.articlestatus}
-              </span>
- */}
-              <BadgeStatus status={article.articlestatus} />
+              <h2 className="text-lg text-gray-900 font-bold pb-2">
+                {article.course}
+              </h2>
             </div>
 
             <div>
@@ -85,23 +83,21 @@ function ArticleView({ article }) {
           </div>
 
           <div className="py-2 flex justify-around items-center gap-4 my-4">
-{/*             <div>
+            <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Estat de publicació:
+                Estat de l'article:
               </h2>
-              <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
-                {article.publicationstatus}
-              </span>
+              <BadgeStatus status={article.articlestatus} />
             </div>
- */}
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
                 Estat de venda:
               </h2>
-              <h2 className="text-lg text-gray-900 font-bold pb-2">
+              <span className="rounded-full font-bold bg-green-600 px-3 py-1 text-white">
                 {article.salestatus}
-              </h2>
+              </span>
             </div>
+
           </div>
 
           {data && data.user.email !== article.useremail && (
