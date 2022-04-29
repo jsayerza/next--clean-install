@@ -2,6 +2,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export function Navbar() {
   const { data } = useSession();
@@ -13,7 +14,7 @@ export function Navbar() {
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <Link href="/">
           <a className="flex items-center">
-            <img
+            <Image
               src="logo-60-a-217x50.jpg"
               className="mr-3 h-6 sm:h-9"
               alt=""
@@ -41,7 +42,7 @@ export function Navbar() {
           >
             <div className="py-3 px-4">
               <span className="block text-sm text-gray-900 dark:text-white">
-                Bonnie Green
+                xxx
               </span>
               <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
                 jsayerza.comptes@gmail.com
@@ -142,10 +143,11 @@ export function Navbar() {
                 </a>
               </Link>
             </li>
+            
             <li>
               {data?.user ? (
                 <div className="rounded-full hover:cursor-pointer">
-                  <img
+                  <Image 
                     onClick={() => signOut()}
                     src={data?.user.image}
                     alt="avatar image"

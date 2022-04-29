@@ -12,7 +12,7 @@ const setSearch = async (req, res) => {
     const { search } = req.query;
     console.log(search);
     const [result] = await pool.query(
-      `SELECT * FROM v_article WHERE (articletitle LIKE '%${search}%') OR (description LIKE '%${search}%')`
+      `SELECT * FROM v_article_sell WHERE (articletitle LIKE '%${search}%') OR (description LIKE '%${search}%')`
     );
     console.log(result);
     return res.status(200).json(result);

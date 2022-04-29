@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage, useField } from "formik";
 import * as yup from "yup";
 import { getDownloadURL } from "firebase/storage";
+import Image from "next/image";
 
 import { uploadImage } from "../firebase/client";
 // import { useUser } from "context/authContext";
@@ -401,7 +402,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                 htmlFor="articletitle"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Posa nom a l'article:
+                Posa nom a l&apos;article:
               </label>
               <ErrorMessage
                 component="p"
@@ -426,7 +427,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             </div>
             {updateArticle.imageurl ? (
               <div className="flex flex-wrap justify-center">
-                <img
+                <Image
                   src={updateArticle.imageurl}
                   className="max-w-full h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
                   alt="..."

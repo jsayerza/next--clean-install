@@ -31,7 +31,8 @@ export const Home = ({ articles }) => {
     async function searchedResults() {
       if (search !== SEARCH_STATE.EMPTY) {
         const response = await axios.get(
-          `http://escolapop.hopto.org:3000/api/articles/search/${search}`,
+          //`http://escolapop.hopto.org:3000/api/articles/search/${search}`,
+          `http://localhost:3000/api/articles/search/${search}`,
           // señal para abortar la peticion
           { signal: controller.signal }
         );

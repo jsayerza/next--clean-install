@@ -75,7 +75,7 @@ function ArticleView({ article }) {
 
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Ubicació de l'article:
+                Ubicació de l&apos;article:
               </h2>
               <h2 className="text-lg text-gray-900 font-bold pb-2">
                 {article.location} ({article.locationid})
@@ -86,7 +86,7 @@ function ArticleView({ article }) {
           <div className="py-2 flex justify-around items-center gap-4 my-4">
             <div>
               <h2 className="text-lg text-gray-900 font-semibold pb-2">
-                Estat de l'article:
+                Estat de l&apos;article:
               </h2>
               <BadgeStatus status={article.articlestatus} />
             </div>
@@ -140,7 +140,7 @@ function ArticleView({ article }) {
   );
 }
 
-//// Funció especial de Next per executar codi de server que s'executa abans que la pantalla es presenti en el client. Després carrega el return de HomePage
+//// Funció especial de Next per executar codi de server que s_executa abans que la pantalla es presenti en el client. Després carrega el return de HomePage
 export const getServerSideProps = async (context) => {
   const { data: article } = await axios.get(
     HOST_SV + PORT_SV + "/api/articles/" + context.query.id

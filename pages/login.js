@@ -17,7 +17,7 @@ export default function Login() {
           onClick={handleLogin}
         >
           <GoogleIcon size="2rem" />
-          Login with Google
+          Login amb Google
         </button>
       </div>
     </div>
