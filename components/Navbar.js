@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function Navbar() {
   const { data } = useSession();
-  console.log(data);
+  console.log("Navbar/data: ", data);
   // const { user, handleGoogleLogin } = useUser();
 
   return (
@@ -15,11 +15,13 @@ export function Navbar() {
         <Link href="/">
           <a className="flex items-center">
             <Image
-              src="logo-60-a-217x50.jpg"
+              src="/logo-60-a-217x50.jpg"
               className="mr-3 h-6 sm:h-9"
               alt=""
+              width={217}
+              height={50}
             />
-            <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="text-white self-center text-3xl font-bold whitespace-nowrap dark:text-white px-10">
               Escolapop
             </span>
           </a>
@@ -152,6 +154,9 @@ export function Navbar() {
                     src={data?.user.image}
                     alt="avatar image"
                     className="h-10 w-10 rounded-full"
+                    width={50}
+                    height={50}
+      
                   />
                 </div>
               ) : (
