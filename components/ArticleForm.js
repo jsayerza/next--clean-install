@@ -279,10 +279,11 @@ export function ArticleForm({ articleUpdateId = null }) {
                       .put(
                         HOST_SV +
                           PORT_SV +
-                          `/api/articles/images/${articleUpdateId}`,
+                          //`/api/articles/images/${articleUpdateId}`,
+                          `/api/articles/images`,
                         {
                           imageurl: urlImg,
-                          //articleimageid: articleUpdateId,
+                          articleimageid: articleUpdateId,
                         }
                       )
                       .then((res) => router.push("/"))
