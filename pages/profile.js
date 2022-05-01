@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
-import Layout from "components/Layout";
+import Layout from "../components/Layout";
 import axios from "axios";
 import { HOST_SV, PORT_SV } from "../config/config";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import ArticleCard from "components/ArticleCard";
-import { map } from "@firebase/util";
-import ArticleList from "components/ArticleList";
+/* import ArticleCard from "components/ArticleCard";
+import { map } from "@firebase/util"; */
+import ArticleList from "../components/ArticleList";
 
 function ProfilePage() {
   const router = useRouter();
   const [profileArticles, setProfileArticles] = useState([]);
 
   useEffect(() => {
-    async function profileArticles() {
+    async function getProfileArticles() {
       const session = await getSession();
       if (!session || session === null || session === undefined) {
         return router.push("/");
@@ -28,7 +28,7 @@ function ProfilePage() {
       }
     }
 
-    profileArticles();
+    getProfileArticles();
   }, [router]);
 
   return (
