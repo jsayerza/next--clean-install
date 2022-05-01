@@ -15,7 +15,9 @@ export function Navbar() {
         <Link href="/">
           <a className="flex items-center">
             <Image
-              src="logo-60-a-217x50.jpg"
+              width={50}
+              height={50}
+              src="/logo-60-a-217x50.jpg"
               className="mr-3 h-6 sm:h-9"
               alt=""
             />
@@ -143,11 +145,13 @@ export function Navbar() {
                 </a>
               </Link>
             </li>
-            
+
             <li>
               {data?.user ? (
                 <div className="rounded-full hover:cursor-pointer">
-                  <Image 
+                  <Image
+                    width={32}
+                    height={32}
                     onClick={() => signOut()}
                     src={data?.user.image}
                     alt="avatar image"

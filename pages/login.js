@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useUser } from "context/authContext";
-import { GoogleIcon } from "icons/GoogleIcon";
+// import { useUser } from "context/authContext";
+import { GoogleIcon } from "../icons/GoogleIcon";
 
 export default function Login() {
-  const { handleLogin } = useUser();
+  // const { handleLogin } = useUser();
   const [loading, setLoading] = useState(false);
 
   return (
@@ -12,10 +12,7 @@ export default function Login() {
         <h1 className="text-6xl text-center font-bold">Welcome</h1>
         <h2 className="text-3xl text-center font-bold">Login to continue</h2>
 
-        <button
-          className="mt-4 px-6 py-3 bg-gray-200 text-black font-bold text-lg  flex gap-2 items-center rounded hover:bg-gray-300 hover:scale-110 transition duration-200"
-          onClick={handleLogin}
-        >
+        <button className="mt-4 px-6 py-3 bg-gray-200 text-black font-bold text-lg  flex gap-2 items-center rounded hover:bg-gray-300 hover:scale-110 transition duration-200">
           <GoogleIcon size="2rem" />
           Login amb Google
         </button>

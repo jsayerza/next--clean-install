@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from "react";
+/* import { useState, useEffect, createContext, useContext } from "react";
 import { loginWithGoogle, authStateChanged } from "../firebase/client";
 
 const USER_STATES = {
@@ -12,15 +12,15 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     authStateChanged(setUser);
-  }, []);
+  }, []); */
 
-  /* OJO LOGICA PARA LAS RUTAS DE ATENTICACION
+/* OJO LOGICA PARA LAS RUTAS DE ATENTICACION
 
   useEffect(() => {
     user === USER_STATES.NOT_LOGGED && router.push("/Login");
   }, [user]); */
 
-  const handleGoogleLogin = () => {
+/*   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then(setUser)
       .catch((error) => console.error(error));
@@ -33,8 +33,9 @@ export const AuthContextProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
+ */
 // hook para usar el contexto en cualquier component de la app
-export const useUser = () => {
+/* export const useUser = () => {
   return useContext(AuthContext);
 };
+ */

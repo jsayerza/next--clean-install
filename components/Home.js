@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { HOST_SV, PORT_SV } from "config/config";
-import SearchBar from "components/SearchBar";
-import { SearchResults } from "components/SearchResults";
-import ArticleCard from "components/ArticleCard";
+import SearchBar from "../components/SearchBar";
+import { SearchResults } from "../components/SearchResults";
+import ArticleCard from "../components/ArticleCard";
 import debounce from "just-debounce-it";
 
 const SEARCH_STATE = {
@@ -19,6 +18,7 @@ export const Home = ({ articles }) => {
   const [search, setSearch] = useState(SEARCH_STATE.EMPTY);
   const [searchResult, setSearchResult] = useState(SEARCH_RESULT_STATE.EMPTY);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleChange = useCallback(
     debounce((e) => setSearch(e.target.value), 300),
     [search]

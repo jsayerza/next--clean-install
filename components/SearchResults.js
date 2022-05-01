@@ -1,4 +1,4 @@
-import ArticleCard from "components/ArticleCard";
+import ArticleCard from "../components/ArticleCard";
 
 export const SearchResults = ({ searched }) => {
   return (
