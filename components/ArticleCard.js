@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BadgeStatus } from "./BadgeStatus";
 
 function ArticleCard({ article }) {
-  console.log(article.imageurl);
+  console.log("ArticleCard/article.imageurl: ", article.imageurl);
   return (
     <Link href={`/articles/${article.articleid}`} key={article.articleid}>
       <a>
