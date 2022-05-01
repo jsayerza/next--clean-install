@@ -1,8 +1,7 @@
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import { Formik, Form, Field, ErrorMessage, useField } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { getDownloadURL } from "firebase/storage";
 import Image from "next/image";
@@ -10,7 +9,7 @@ import Image from "next/image";
 import { uploadImage } from "../firebase/client";
 // import { useUser } from "context/authContext";
 import { useSession } from "next-auth/react";
-import { HOST_SV, PORT_SV } from "config/config";
+import { HOST_SV, PORT_SV } from "../config/config";
 
 export function ArticleForm({ articleUpdateId = null }) {
   //console.log("articleUpdateId: ", articleUpdateId);
@@ -61,82 +60,81 @@ export function ArticleForm({ articleUpdateId = null }) {
     );
   };
 
-  const getTables = async () => {
-    //console.log("getTables")
-    const { data: articleCategory } = await axios.get(
-      HOST_SV + PORT_SV + "/api/tables",
-      {
-        params: {
-          table: "articleCategory",
-        },
-      }
-    );
-    //console.log("articleCategory: ", articleCategory);
-    setArticleCategory(articleCategory);
-
-    const { data: articleStatus } = await axios.get(
-      HOST_SV + PORT_SV + "/api/tables",
-      {
-        params: {
-          table: "articleStatus",
-        },
-      }
-    );
-    //console.log("articleStatus: ", articleStatus);
-    setArticleStatus(articleStatus);
-
-    const { data: course } = await axios.get(
-      HOST_SV + PORT_SV + "/api/tables",
-      {
-        params: {
-          table: "course",
-        },
-      }
-    );
-    //console.log("course: ", course);
-    setCourse(course);
-
-    const { data: location } = await axios.get(
-      HOST_SV + PORT_SV + "/api/tables",
-      {
-        params: {
-          table: "location",
-        },
-      }
-    );
-    //console.log("location: ", location);
-    setLocation(location);
-
-    const { data: publicationStatus } = await axios.get(
-      HOST_SV + PORT_SV + "/api/tables",
-      {
-        params: {
-          table: "publicationStatus",
-        },
-      }
-    );
-    //console.log("publicationStatus: ", publicationStatus);
-    setPublicationStatus(publicationStatus);
-
-    const { data: saleStatus } = await axios.get(
-      HOST_SV + PORT_SV + "/api/tables",
-      {
-        params: {
-          table: "saleStatus",
-        },
-      }
-    );
-    //console.log("saleStatus: ", saleStatus);
-    setSaleStatus(saleStatus);
-  };
-
-  ////TODO: revisar esto. ¿carga varias veces?
-  if (articleCategory.length < 1) {
-    //console.log("articleCategory.length: ", articleCategory.length);
-    getTables();
-  }
-
   useEffect(() => {
+    const getTables = async () => {
+      //console.log("getTables")
+      const { data: articleCategory } = await axios.get(
+        HOST_SV + PORT_SV + "/api/tables",
+        {
+          params: {
+            table: "articleCategory",
+          },
+        }
+      );
+      //console.log("articleCategory: ", articleCategory);
+      setArticleCategory(articleCategory);
+
+      const { data: articleStatus } = await axios.get(
+        HOST_SV + PORT_SV + "/api/tables",
+        {
+          params: {
+            table: "articleStatus",
+          },
+        }
+      );
+      //console.log("articleStatus: ", articleStatus);
+      setArticleStatus(articleStatus);
+
+      const { data: course } = await axios.get(
+        HOST_SV + PORT_SV + "/api/tables",
+        {
+          params: {
+            table: "course",
+          },
+        }
+      );
+      //console.log("course: ", course);
+      setCourse(course);
+
+      const { data: location } = await axios.get(
+        HOST_SV + PORT_SV + "/api/tables",
+        {
+          params: {
+            table: "location",
+          },
+        }
+      );
+      //console.log("location: ", location);
+      setLocation(location);
+
+      const { data: publicationStatus } = await axios.get(
+        HOST_SV + PORT_SV + "/api/tables",
+        {
+          params: {
+            table: "publicationStatus",
+          },
+        }
+      );
+      //console.log("publicationStatus: ", publicationStatus);
+      setPublicationStatus(publicationStatus);
+
+      const { data: saleStatus } = await axios.get(
+        HOST_SV + PORT_SV + "/api/tables",
+        {
+          params: {
+            table: "saleStatus",
+          },
+        }
+      );
+      //console.log("saleStatus: ", saleStatus);
+      setSaleStatus(saleStatus);
+    };
+
+    ////TODO: revisar esto. ¿carga varias veces?
+    if (articleCategory.length < 1) {
+      //console.log("articleCategory.length: ", articleCategory.length);
+      getTables();
+    }
     if (articleUpdateId !== null) {
       axios
         .get(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`)
@@ -156,7 +154,7 @@ export function ArticleForm({ articleUpdateId = null }) {
           });
         });
     }
-  }, [articleUpdateId]);
+  }, [articleCategory.length, articleUpdateId]);
 
   /*   const MySelect = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -428,6 +426,8 @@ export function ArticleForm({ articleUpdateId = null }) {
             {updateArticle.imageurl ? (
               <div className="flex flex-wrap justify-center">
                 <Image
+                  width={250}
+                  height={250}
                   src={updateArticle.imageurl}
                   className="max-w-full h-auto rounded-lg transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
                   alt="..."
