@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function Navbar() {
   const { data } = useSession();
-  console.log("Navbar/data: ", data);
+  console.log(data);
   // const { user, handleGoogleLogin } = useUser();
 
   return (
@@ -19,9 +19,9 @@ export function Navbar() {
               height={50}
               src="/logo-60-a-217x50.jpg"
               className="mr-3 h-6 sm:h-9"
-              alt="logo image"
+              alt=""
             />
-            <span className="text-white self-center text-3xl font-bold whitespace-nowrap dark:text-white px-10">
+            <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Escolapop
             </span>
           </a>
@@ -124,36 +124,29 @@ export function Navbar() {
           id="mobile-menu-2"
         >
           <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:justify-center md:items-center">
-            {/*             <li>
+            <li>
               <Link href="/new">
                 <a className="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                   Nou article
                 </a>
               </Link>
             </li>
- */}
-            {/*             <li>
+            <li>
               <Link href="/profile">
                 <a className="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                   El meu escolapop
                 </a>
               </Link>
             </li>
- */}
-            {/*             <li>
+            <li>
               <Link href="/about">
                 <a className="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                   Sobre Escolapop
                 </a>
               </Link>
             </li>
-<<<<<<< HEAD
 
             <li>
-=======
- */}
-            {/*             <li>
->>>>>>> 56ade344a086884819d89da095f17be6e65319e9
               {data?.user ? (
                 <div className="rounded-full hover:cursor-pointer">
                   <Image
@@ -163,9 +156,6 @@ export function Navbar() {
                     src={data?.user.image}
                     alt="avatar image"
                     className="h-10 w-10 rounded-full"
-                    width={50}
-                    height={50}
-      
                   />
                 </div>
               ) : (
@@ -177,7 +167,6 @@ export function Navbar() {
                 </button>
               )}
             </li>
- */}
           </ul>
         </div>
       </div>
