@@ -30,10 +30,10 @@ export default function ArticleList({ articles }) {
   };
 
   return (
-    <div className="flex gap-4 flex-col w-full">
+    <div className="flex gap-4 flex-col w-full justify-center">
       {articles.map((article) => (
         <div
-          className="flex justify-between border-gray-200 border-b pb-2 px-2 gap-6 transition-all duration-200 hover:bg-white"
+          className="flex justify-between items-center border-gray-200 border-b pb-2 px-2 gap-6 transition-all duration-200 hover:bg-white"
           key={article.articleid}
         >
           <div className="flex items-center">
