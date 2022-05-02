@@ -17,7 +17,7 @@ export function ArticleForm({ articleUpdateId = null }) {
   const router = useRouter();
   // const { user } = useUser();
   const { data } = useSession();
-  console.log(data);
+  console.log("ArticleForm/data: , data");
   //console.log("ArticleForm/user.email: ", user.email)
   //console.log("ArticleForm/user: ", user)
 
@@ -49,7 +49,7 @@ export function ArticleForm({ articleUpdateId = null }) {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress);
+        console.log("handleUpload/progress: ", progress);
       },
       // si hay error lo ejecutamos
       (err) => console.log(err),
@@ -277,10 +277,11 @@ export function ArticleForm({ articleUpdateId = null }) {
                       .put(
                         HOST_SV +
                           PORT_SV +
-                          `/api/articles/images/${articleUpdateId}`,
+                          //`/api/articles/images/${articleUpdateId}`,
+                          `/api/articles/images`,
                         {
                           imageurl: urlImg,
-                          //articleimageid: articleUpdateId,
+                          articleimageid: articleUpdateId,
                         }
                       )
                       .then((res) => router.push("/"))

@@ -36,7 +36,7 @@ function ArticleView({ article }) {
   return (
     <Layout>
       <div className="flex flex-col gap-4 md:flex-row">
-        <div className="flex-1 w-full" pr-5>
+        <div className="flex-1 w-full">
           {article.imageurl ? (
             <Image
               src={article.imageurl}
@@ -48,7 +48,7 @@ function ArticleView({ article }) {
             "no hay imagen"
           )}
         </div>
-        <div className="flex-1 w-full flex-col" pl-5>
+        <div className="flex-1 w-full flex-col">
           <div className="py-4 text-3xl text-gray-900 font-bold flex justify-between items-center">
             <h1>{article.articletitle}</h1>
             <h2>{article.price}€</h2>

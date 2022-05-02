@@ -14,7 +14,6 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-// objeto que contiene la config de firebase al crear el proyecto
 const firebaseConfig = {
   apiKey: "AIzaSyDMrVCx3Czfj5Rcp52Dk544UKTaZ7CzRAg",
   authDomain: "escolapop-db7d2.firebaseapp.com",

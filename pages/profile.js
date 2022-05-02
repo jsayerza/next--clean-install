@@ -23,7 +23,7 @@ function ProfilePage() {
         const { data } = await axios.get(
           HOST_SV + PORT_SV + "/api/articles/profile"
         );
-        console.log(data);
+        console.log("profileArticles/data: ", data);
         setProfileArticles(data);
       }
     }

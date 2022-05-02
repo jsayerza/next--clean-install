@@ -14,7 +14,11 @@ export default function ArticleList({ articles }) {
       return await axios
         .delete("/api/articles/" + id)
         .then(async (res) => {
-          await axios.delete("/api/articles/images/" + id);
+          //await axios.delete("/api/articles/images/" + id);
+          await axios.delete("/api/articles/images"),
+          {
+            articleimageid: id,
+          };
           toast.success("Article eliminat");
           router.push("/");
         })
