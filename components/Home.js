@@ -3,6 +3,7 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
 import ArticleCard from "../components/ArticleCard";
+import { HOST_SV, PORT_SV } from "../config/config";
 import debounce from "just-debounce-it";
 
 const SEARCH_STATE = {
