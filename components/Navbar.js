@@ -15,7 +15,7 @@ export function Navbar() {
         <Link href="/">
           <a className="flex items-center">
             <Image
-              width={50}
+              width={150}
               height={50}
               src="/logo-60-a-217x50.jpg"
               className="mr-3 h-6 sm:h-9"

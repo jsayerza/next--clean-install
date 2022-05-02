@@ -24,7 +24,9 @@ function ArticleCard({ article }) {
             )}
           </div>
           <div className="p-5">
-            <h3 className="text-md font-semibold">{article.articlecategory}</h3>
+            <h3 className="text-md font-semibold">
+              Category: {article.articlecategory}
+            </h3>
             <div className="py-2">
               <h1 className="text-2xl font-bold text-center text-gray-900">
                 {article.articletitle}
@@ -34,14 +36,18 @@ function ArticleCard({ article }) {
               {article.description}
             </p>
             <div className="flex flex-col gap-1 justify-start items-start">
-              <span className="font-semibold text-gray-800">Estat de conservació:</span>
+              <span className="font-semibold text-gray-800">
+                Estat de conservació:
+              </span>
               <BadgeStatus status={article.articlestatus} />
             </div>
-            <div className="flex gap-2 py-1">
+            <div className="flex gap-2 py-1 items-center">
               <p className="font-semibold text-gray-800">Curs:</p>
-              <h3 className="font-semibold text-gray-800 text-lg">{article.course}</h3>
+              <h3 className="font-semibold text-gray-800 text-lg">
+                {article.course}
+              </h3>
             </div>
-            <div className="flex gap-2 py-1">
+            <div className="flex gap-2 py-1 items-center">
               <p className="font-semibold text-gray-800">Ubicació:</p>
               <h3 className="font-semibold text-gray-800 text-lg">
                 {article.location} ({article.locationid})

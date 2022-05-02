@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 export default function ArticleList({ articles }) {
-
   const router = useRouter();
 
   const handleDelete = async (id) => {
@@ -26,12 +25,11 @@ export default function ArticleList({ articles }) {
     }
   };
 
-
   return (
-    <div className="flex gap-4 flex-col w-full">
+    <div className="flex gap-4 flex-col w-full justify-center">
       {articles.map((article) => (
         <div
-          className="flex justify-between border-gray-200 border-b pb-2 px-2 gap-6 transition-all duration-200 hover:bg-white"
+          className="flex justify-between items-center border-gray-200 border-b pb-2 px-2 gap-6 transition-all duration-200 hover:bg-white"
           key={article.articleid}
         >
           <div className="flex items-center">
@@ -39,8 +37,8 @@ export default function ArticleList({ articles }) {
               {article && article.imageurl && (
                 <Image
                   src={article.imageurl}
-                  width={100}
-                  height={100}
+                  width={200}
+                  height={150}
                   objectFit="cover"
                   className="max-w-full h-auto rounded-lg transition-shadow ease-in-out shadow-none"
                   alt="image of the article"
@@ -64,9 +62,7 @@ export default function ArticleList({ articles }) {
             </div>
 
             <div className="flex flex-col justify-center items-center py-4 px-8">
-              <h1 className="text-lg font-semibold">
-                {article.salestatus}
-              </h1>
+              <h1 className="text-lg font-semibold">{article.salestatus}</h1>
             </div>
 
             <div className="flex flex-col justify-center items-center py-4 px-8">
@@ -81,7 +77,7 @@ export default function ArticleList({ articles }) {
           </div>
 
           <div className="flex gap-4 justify-center items-center">
-            <button 
+            <button
               className="px-2 py-2 rounded font-bold text-gray-700 hover:bg-gray-400 hover:text-white transition-all duration-200"
               onClick={() => {
                 //console.log("ArticleView/article.articleid: ", article.articleid)
@@ -90,7 +86,7 @@ export default function ArticleList({ articles }) {
             >
               <FiEdit3 size={22} />
             </button>
-            <button 
+            <button
               className="px-2 py-2 rounded font-bold text-gray-700 hover:bg-red-500 hover:text-white transition-all duration-200"
               onClick={() => handleDelete(article.articleid)}
             >
