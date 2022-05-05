@@ -21,7 +21,7 @@ function ProfilePage() {
 
       if (session) {
         const { data } = await axios.get(
-          HOST_SV + PORT_SV + "/api/articles/profile"
+          HOST_SV + "/api/articles/profile"
         );
         console.log("profileArticles/data: ", data);
         setProfileArticles(data);
@@ -43,7 +43,7 @@ function ProfilePage() {
 
 /* export const getServerSideProps = async (context) => {
   const { data: articles } = await axios.get(
-    HOST_SV + PORT_SV + "/api/articles/profile"
+    HOST_SV + "/api/articles/profile"
   );
 
   console.log(articles);

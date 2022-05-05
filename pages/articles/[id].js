@@ -143,7 +143,7 @@ function ArticleView({ article }) {
 //// Funció especial de Next per executar codi de server que s_executa abans que la pantalla es presenti en el client. Després carrega el return de HomePage
 export const getServerSideProps = async (context) => {
   const { data: article } = await axios.get(
-    HOST_SV + PORT_SV + "/api/articles/" + context.query.id
+    HOST_SV + "/api/articles/" + context.query.id
   );
   //console.log("ArticleView/getServerSideProps/article: ", article);
 

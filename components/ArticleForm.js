@@ -64,7 +64,7 @@ export function ArticleForm({ articleUpdateId = null }) {
     const getTables = async () => {
       //console.log("getTables")
       const { data: articleCategory } = await axios.get(
-        HOST_SV + PORT_SV + "/api/tables",
+        HOST_SV + "/api/tables",
         {
           params: {
             table: "articleCategory",
@@ -75,7 +75,7 @@ export function ArticleForm({ articleUpdateId = null }) {
       setArticleCategory(articleCategory);
 
       const { data: articleStatus } = await axios.get(
-        HOST_SV + PORT_SV + "/api/tables",
+        HOST_SV + "/api/tables",
         {
           params: {
             table: "articleStatus",
@@ -86,7 +86,7 @@ export function ArticleForm({ articleUpdateId = null }) {
       setArticleStatus(articleStatus);
 
       const { data: course } = await axios.get(
-        HOST_SV + PORT_SV + "/api/tables",
+        HOST_SV + "/api/tables",
         {
           params: {
             table: "course",
@@ -97,7 +97,7 @@ export function ArticleForm({ articleUpdateId = null }) {
       setCourse(course);
 
       const { data: location } = await axios.get(
-        HOST_SV + PORT_SV + "/api/tables",
+        HOST_SV + "/api/tables",
         {
           params: {
             table: "location",
@@ -108,7 +108,7 @@ export function ArticleForm({ articleUpdateId = null }) {
       setLocation(location);
 
       const { data: publicationStatus } = await axios.get(
-        HOST_SV + PORT_SV + "/api/tables",
+        HOST_SV + "/api/tables",
         {
           params: {
             table: "publicationStatus",
@@ -119,7 +119,7 @@ export function ArticleForm({ articleUpdateId = null }) {
       setPublicationStatus(publicationStatus);
 
       const { data: saleStatus } = await axios.get(
-        HOST_SV + PORT_SV + "/api/tables",
+        HOST_SV + "/api/tables",
         {
           params: {
             table: "saleStatus",
@@ -137,7 +137,7 @@ export function ArticleForm({ articleUpdateId = null }) {
     }
     if (articleUpdateId !== null) {
       axios
-        .get(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`)
+        .get(HOST_SV + `/api/articles/${articleUpdateId}`)
         .then((res) => {
           //console.log("useEffect/res.data: ", res.data);
           setUpdateArticle({
@@ -264,7 +264,7 @@ export function ArticleForm({ articleUpdateId = null }) {
             //console.log("onSubmit/PUT/urlImg: ", urlImg);
             return (
               axios
-                .put(HOST_SV + PORT_SV + `/api/articles/${articleUpdateId}`, {
+                .put(HOST_SV + `/api/articles/${articleUpdateId}`, {
                   ...values,
                   useremail: `${data?.user?.email}`,
                 })
@@ -276,7 +276,6 @@ export function ArticleForm({ articleUpdateId = null }) {
                     return axios
                       .put(
                         HOST_SV +
-                          PORT_SV +
                           //`/api/articles/images/${articleUpdateId}`,
                           `/api/articles/images`,
                         {
@@ -299,14 +298,14 @@ export function ArticleForm({ articleUpdateId = null }) {
             //console.log("onSubmit/POST/values: ", values);
             //console.log("onSubmit/POST/`${user.email}`: ", `${user.email}`);
             return axios
-              .post(HOST_SV + PORT_SV + "/api/articles", {
+              .post(HOST_SV + "/api/articles", {
                 ...values,
                 useremail: `${data?.user?.email}`,
               })
               .then((response) => {
                 //console.log(response.data);
                 return axios
-                  .post(HOST_SV + PORT_SV + "/api/articles/images", {
+                  .post(HOST_SV + "/api/articles/images", {
                     articleId: response.data.articleid,
                     url: urlImg,
                   })

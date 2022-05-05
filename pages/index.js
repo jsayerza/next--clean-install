@@ -15,7 +15,7 @@ function HomePage({ articles }) {
 ////   Després carrega el return de HomePage
 export const getServerSideProps = async (context) => {
   const { data: articles } = await axios.get(
-    HOST_SV + PORT_SV + "/api/articles"
+    HOST_SV + "/api/articles"
   );
   //console.log("getServerSideProps/articles: ", articles);
 
