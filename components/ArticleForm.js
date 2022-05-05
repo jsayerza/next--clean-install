@@ -9,15 +9,17 @@ import Image from "next/image";
 import { uploadImage } from "../firebase/client";
 // import { useUser } from "context/authContext";
 import { useSession } from "next-auth/react";
-import { HOST_SV, PORT_SV } from "../config/config";
+import { HOST_SV } from "../config/config";
 
 export function ArticleForm({ articleUpdateId = null }) {
   //console.log("articleUpdateId: ", articleUpdateId);
+  console.log("ArticleForm/HOST_SV: ", HOST_SV);
+  //console.log("ArticleForm/NEXT_PUBLIC_HOST_SV: ", NEXT_PUBLIC_HOST_SV);
 
   const router = useRouter();
   // const { user } = useUser();
   const { data } = useSession();
-  console.log("ArticleForm/data: , data");
+  //console.log("ArticleForm/data:" , data);
   //console.log("ArticleForm/user.email: ", user.email)
   //console.log("ArticleForm/user: ", user)
 
@@ -62,7 +64,7 @@ export function ArticleForm({ articleUpdateId = null }) {
 
   useEffect(() => {
     const getTables = async () => {
-      //console.log("getTables")
+      console.log("getTables")
       const { data: articleCategory } = await axios.get(
         HOST_SV + "/api/tables",
         {
@@ -71,7 +73,7 @@ export function ArticleForm({ articleUpdateId = null }) {
           },
         }
       );
-      //console.log("articleCategory: ", articleCategory);
+      console.log("articleCategory: ", articleCategory);
       setArticleCategory(articleCategory);
 
       const { data: articleStatus } = await axios.get(

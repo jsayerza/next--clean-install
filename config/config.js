@@ -4,7 +4,9 @@ export const PASSWORD_DB = process.env.PASSWORD_DB;
 export const PORT_DB = process.env.PORT_DB;
 export const DATABASE_DB = process.env.DATABASE_DB || "testdb";
 
-export const HOST_SV = process.env.HOST_SV || "http://localhost:";
+//export const HOST_SV = process.env.HOST_SV;
+//export const NEXT_PUBLIC_HOST_SV = process.env.NEXT_PUBLIC_HOST_SV;
+export const HOST_SV = process.env.NEXT_PUBLIC_HOST_SV;
 
 export const APIKEY_FB = process.env.APIKEY_FB || "mock_key";
 export const AUTHDOMAIN_FB = process.env.AUTHDOMAIN_FB;
