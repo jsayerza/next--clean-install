@@ -15,3 +15,7 @@ export const STORAGEBUCKET_FB = process.env.STORAGEBUCKET_FB;
 export const MESSAGINGSENDERID_FB = process.env.MESSAGINGSENDERID_FB;
 export const APPID_FB = process.env.APPID_FB;
 
+export const NEXT_PUBLIC_SECRET = process.env.NEXT_PUBLIC_SECRET;
+
+
+
