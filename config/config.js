@@ -11,7 +11,7 @@ export const HOST_SV = process.env.NEXT_PUBLIC_HOST_SV;
 export const APIKEY_FB = process.env.APIKEY_FB || "mock_key";
 export const AUTHDOMAIN_FB = process.env.AUTHDOMAIN_FB;
 export const PROJECTID_FB = process.env.PROJECTID_FB;
-export const STORAGEBUCKET_FB = process.env.STORAGEBUCKET_FB;
+export const NEXT_PUBLIC_STORAGEBUCKET_FB = process.env.NEXT_PUBLIC_STORAGEBUCKET_FB;
 export const MESSAGINGSENDERID_FB = process.env.MESSAGINGSENDERID_FB;
 export const APPID_FB = process.env.APPID_FB;
 
