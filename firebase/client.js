@@ -13,8 +13,10 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
 } from "firebase/auth";
+import { firebaseConfig } from "../firebase/firebaseConfig";
 
-const firebaseConfig = {
+
+/* const firebaseConfig = {
   apiKey: "AIzaSyDMrVCx3Czfj5Rcp52Dk544UKTaZ7CzRAg",
   authDomain: "escolapop-db7d2.firebaseapp.com",
   projectId: "escolapop-db7d2",
@@ -22,7 +24,7 @@ const firebaseConfig = {
   messagingSenderId: "22410271497",
   appId: "1:22410271497:web:a573e2f2e658e5aced91d8",
 };
-
+ */
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();

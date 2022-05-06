@@ -13,8 +13,9 @@ import { HOST_SV } from "../config/config";
 
 export function ArticleForm({ articleUpdateId = null }) {
   //console.log("articleUpdateId: ", articleUpdateId);
-  console.log("ArticleForm/HOST_SV: ", HOST_SV);
+  //console.log("ArticleForm/HOST_SV: ", HOST_SV);
   //console.log("ArticleForm/NEXT_PUBLIC_HOST_SV: ", NEXT_PUBLIC_HOST_SV);
+  //console.log("ArticleForm/NEXT_PUBLIC_SECRET: ", NEXT_PUBLIC_SECRET);
 
   const router = useRouter();
   // const { user } = useUser();
