@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
-import { HOST_SV, PORT_SV } from "../config/config";
+import { HOST_SV } from "../config/config";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 /* import ArticleCard from "components/ArticleCard";
@@ -23,7 +23,7 @@ function ProfilePage() {
         const { data } = await axios.get(
           HOST_SV + "/api/articles/profile"
         );
-        console.log("profileArticles/data: ", data);
+        //console.log("profileArticles/data: ", data);
         setProfileArticles(data);
       }
     }

@@ -65,7 +65,7 @@ export function ArticleForm({ articleUpdateId = null }) {
 
   useEffect(() => {
     const getTables = async () => {
-      console.log("getTables")
+      //console.log("getTables")
       const { data: articleCategory } = await axios.get(
         HOST_SV + "/api/tables",
         {
@@ -74,7 +74,7 @@ export function ArticleForm({ articleUpdateId = null }) {
           },
         }
       );
-      console.log("articleCategory: ", articleCategory);
+      //console.log("articleCategory: ", articleCategory);
       setArticleCategory(articleCategory);
 
       const { data: articleStatus } = await axios.get(
@@ -276,11 +276,7 @@ export function ArticleForm({ articleUpdateId = null }) {
                   //// Solo modificar la imágen si hay una nueva imágen para sustituir JSM 20220424
                   if (urlImg != "") {
                     //console.log("onSubmit/PUT/urlImg/entra!");
-                    return axios
-                      .put(
-                        HOST_SV +
-                          //`/api/articles/images/${articleUpdateId}`,
-                          `/api/articles/images`,
+                    return axios.put(HOST_SV + `/api/articles/images`,
                         {
                           imageurl: urlImg,
                           articleimageid: articleUpdateId,

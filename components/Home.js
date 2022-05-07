@@ -41,7 +41,7 @@ export const Home = ({ articles }) => {
         if (response.data.length === 0) {
           return setSearchResult(null);
         }
-        console.log("searchedResults/response.data: ", response.data);
+        //console.log("searchedResults/response.data: ", response.data);
         return setSearchResult(response.data);
       }
       return setSearchResult(articles);

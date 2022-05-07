@@ -23,7 +23,7 @@ const getProfileArticles = async (req, res) => {
 
       return res.status(200).json(result);
     } else {
-      console.log("getProfileArticles/session: ", session)
+      //console.log("getProfileArticles/session: ", session)
       return res.status(401).json({
         error: "Has intentat fer alguna acció incorrecta o no estàs identificat",
       });

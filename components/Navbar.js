@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function Navbar() {
   const { data } = useSession();
-  console.log(data);
+  //console.log(data);
   // const { user, handleGoogleLogin } = useUser();
 
   return (
@@ -21,7 +21,7 @@ export function Navbar() {
               className="mr-3 h-6 sm:h-9"
               alt=""
             />
-            <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white px-6">
               Escolapop
             </span>
           </a>

@@ -10,7 +10,7 @@ export default function ArticleList({ articles }) {
 
   const handleDelete = async (id) => {
     try {
-      console.log("ArticleList/handleDelete/id: ", id);
+      //console.log("ArticleList/handleDelete/id: ", id);
       return await axios
         .delete("/api/articles/" + id)
         .then(async (res) => {

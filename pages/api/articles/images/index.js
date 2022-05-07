@@ -6,12 +6,11 @@ export default async function handler(req, res) {
       return await getImage(req, res);
     case "POST":
       return await saveImage(req, res);
-
     case "PUT":
       return await updateImage(req, res);
     case "DELETE":
+      //console.log("handler/req: ", req);
       return await deleteImage(req, res);
-  
 
     default:
       break;
@@ -45,7 +44,7 @@ const saveImage = async (req, res) => {
 };
 
 const updateImage = async (req, res) => {
-  console.log("updateImage/req.body: ", req.body);
+  //console.log("updateImage/req.body: ", req.body);
   //const { id } = req.query;
   const { imageurl, articleimageid } = req.body;
   //const { imageurl } = req.body;
@@ -64,11 +63,14 @@ const updateImage = async (req, res) => {
 
 
 const deleteImage = async (req, res) => {
+  console.log("deleteImage/req.body: ", req.body);
+  //const { id } = req.query;
+  const { articleimageid } = req.body;
   try {
-    console.log("updateImage/req.body: ", req.body);
-    //const { id } = req.query;
-    const { articleimageid } = req.body;
-    await pool.query("DELETE FROM articleimage WHERE articleid = ?", [articleimageid]);
+    await pool.query(
+      "DELETE FROM articleimage WHERE articleid = ?", 
+      [articleimageid]
+    );
     return res.status(204).json();
   } catch (error) {
     return res.status(500).json({ message: error.message });

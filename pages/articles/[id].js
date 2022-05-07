@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
-import { HOST_SV, PORT_SV } from "config/config";
+import { HOST_SV } from "config/config";
 import { Layout } from "../../components/Layout";
 import Image from "next/image";
 import { BadgeStatus } from "components/BadgeStatus";
@@ -19,15 +19,25 @@ function ArticleView({ article }) {
 
   const handleDelete = async (id) => {
     try {
-      //console.log(id);
-      return await axios
-        .delete("/api/articles/" + id)
+      console.log("handleDelete/id: ", id);
+      return await axios.delete("/api/articles/" + id)
         .then(async (res) => {
-          await axios.delete("/api/articles/images/" + id);
-          toast.success("Article eliminat");
-          router.push("/");
+          console.log("handleDelete/cap a : ", HOST_SV + `/api/articles/images`);
+          console.log("handleDelete/then/id: ", id);
+          await axios.delete(HOST_SV + `/api/articles/images`, { articleimageid: id })
+          .then((res) => {
+            toast.success("Article eliminat");
+            router.push("/");
+          })
+          .catch((e) =>
+            console.error("handleDelete DELETE image error: ", e)
+          );
+
+          return router.push("/");
         })
         .catch((e) => console.log("handleDelete delete article error: ", e));
+        
+
     } catch (error) {
       toast.error(error.response.data.message);
     }
