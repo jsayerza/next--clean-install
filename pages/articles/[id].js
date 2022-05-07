@@ -1,15 +1,16 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 import { HOST_SV } from "config/config";
 import { Layout } from "../../components/Layout";
-import Image from "next/image";
 import { BadgeStatus } from "components/BadgeStatus";
-import { useSession } from "next-auth/react";
 import { BadgeSaleStatus } from "components/BadgeSaleStatus";
 // import { useUser } from "context/authContext";
 //import ButtonMailto from "components/ButtonMailTo";
+
 
 function ArticleView({ article }) {
   // const { user } = useUser();
@@ -21,11 +22,12 @@ function ArticleView({ article }) {
     try {
       console.log("handleDelete/id: ", id);
       return await axios.delete("/api/articles/" + id)
-        .then(async (res) => {
+        .then( (res) => {
           console.log("handleDelete/cap a : ", HOST_SV + `/api/articles/images`);
           console.log("handleDelete/then/id: ", id);
-          await axios.delete(HOST_SV + `/api/articles/images`, { articleimageid: id })
+           axios.delete(HOST_SV + `/api/articles/images`, { articleimageid: id })
           .then((res) => {
+            console.log("handleDelete/then/eliminat!");
             toast.success("Article eliminat");
             router.push("/");
           })

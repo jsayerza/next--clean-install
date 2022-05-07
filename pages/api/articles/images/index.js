@@ -7,9 +7,10 @@ export default async function handler(req, res) {
     case "POST":
       return await saveImage(req, res);
     case "PUT":
+      console.log("handler/PUT/req: ", req);
       return await updateImage(req, res);
     case "DELETE":
-      //console.log("handler/req: ", req);
+      console.log("handler/DELETE/req: ", req);
       return await deleteImage(req, res);
 
     default:
@@ -44,7 +45,7 @@ const saveImage = async (req, res) => {
 };
 
 const updateImage = async (req, res) => {
-  //console.log("updateImage/req.body: ", req.body);
+  console.log("updateImage/req.body: ", req.body);
   //const { id } = req.query;
   const { imageurl, articleimageid } = req.body;
   //const { imageurl } = req.body;
@@ -64,6 +65,7 @@ const updateImage = async (req, res) => {
 
 const deleteImage = async (req, res) => {
   console.log("deleteImage/req.body: ", req.body);
+  console.log("deleteImage/req.query: ", req.query);
   //const { id } = req.query;
   const { articleimageid } = req.body;
   try {
