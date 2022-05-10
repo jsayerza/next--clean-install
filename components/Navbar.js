@@ -36,7 +36,7 @@ export function Navbar() {
               className="mr-3 h-6 sm:h-9"
               alt=""
             />
-            <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white px-6">
+            <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white px-2">
               Escolapop
             </span>
           </a>
