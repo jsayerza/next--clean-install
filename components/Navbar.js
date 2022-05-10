@@ -1,3 +1,5 @@
+import { useState } from "react";
+import clsx from "clsx";
 // import { useUser } from "context/authContext";
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -6,8 +8,21 @@ import Image from "next/image";
 
 export function Navbar() {
   const { data } = useSession();
+  const [toggle, setToggle] = useState(false);
   //console.log(data);
   // const { user, handleGoogleLogin } = useUser();
+  const toggleButtonAction = () => {
+    setToggle(!toggle);
+    console.log(toggle);
+  };
+
+  const mobileClases = clsx(
+    "justify-between items-center w-full md:flex md:w-auto md:order-1",
+    {
+      ["relative"]: toggle,
+      ["hidden"]: !toggle,
+    }
+  );
 
   return (
     <nav className="bg-emerald-600 border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
@@ -91,6 +106,7 @@ export function Navbar() {
             className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="mobile-menu-2"
             aria-expanded="false"
+            onClick={toggleButtonAction}
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -119,11 +135,8 @@ export function Navbar() {
             </svg>
           </button>
         </div>
-        <div
-          className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
-          id="mobile-menu-2"
-        >
-          <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:justify-center md:items-center">
+        <div className={mobileClases} id="mobile-menu-2">
+          <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:justify-center md:items-center text-center">
             <li>
               <Link href="/new">
                 <a className="block py-2 pr-4 pl-3 text-white border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
@@ -146,7 +159,7 @@ export function Navbar() {
               </Link>
             </li>
 
-            <li>
+            <li className="pt-1">
               {data?.user ? (
                 <div className="rounded-full hover:cursor-pointer">
                   <Image
@@ -161,7 +174,7 @@ export function Navbar() {
               ) : (
                 <button
                   onClick={signIn}
-                  className="block py-2 px-4 text-white border-white rounded "
+                  className="flex items-center justify-center m-auto py-2 px-4 text-white border rounded font-bold w-full hover:bg-white hover:text-black transition-all ease duration-200"
                 >
                   Login
                 </button>
