@@ -77,36 +77,27 @@ export function ArticleForm({ articleUpdateId = null }) {
       //console.log("articleCategory: ", articleCategory);
       setArticleCategory(articleCategory);
 
-      const { data: articleStatus } = await axios.get(
-        HOST_SV + "/api/tables",
-        {
-          params: {
-            table: "articleStatus",
-          },
-        }
-      );
+      const { data: articleStatus } = await axios.get(HOST_SV + "/api/tables", {
+        params: {
+          table: "articleStatus",
+        },
+      });
       //console.log("articleStatus: ", articleStatus);
       setArticleStatus(articleStatus);
 
-      const { data: course } = await axios.get(
-        HOST_SV + "/api/tables",
-        {
-          params: {
-            table: "course",
-          },
-        }
-      );
+      const { data: course } = await axios.get(HOST_SV + "/api/tables", {
+        params: {
+          table: "course",
+        },
+      });
       //console.log("course: ", course);
       setCourse(course);
 
-      const { data: location } = await axios.get(
-        HOST_SV + "/api/tables",
-        {
-          params: {
-            table: "location",
-          },
-        }
-      );
+      const { data: location } = await axios.get(HOST_SV + "/api/tables", {
+        params: {
+          table: "location",
+        },
+      });
       //console.log("location: ", location);
       setLocation(location);
 
@@ -121,14 +112,11 @@ export function ArticleForm({ articleUpdateId = null }) {
       //console.log("publicationStatus: ", publicationStatus);
       setPublicationStatus(publicationStatus);
 
-      const { data: saleStatus } = await axios.get(
-        HOST_SV + "/api/tables",
-        {
-          params: {
-            table: "saleStatus",
-          },
-        }
-      );
+      const { data: saleStatus } = await axios.get(HOST_SV + "/api/tables", {
+        params: {
+          table: "saleStatus",
+        },
+      });
       //console.log("saleStatus: ", saleStatus);
       setSaleStatus(saleStatus);
     };
@@ -139,23 +127,21 @@ export function ArticleForm({ articleUpdateId = null }) {
       getTables();
     }
     if (articleUpdateId !== null) {
-      axios
-        .get(HOST_SV + `/api/articles/${articleUpdateId}`)
-        .then((res) => {
-          //console.log("useEffect/res.data: ", res.data);
-          setUpdateArticle({
-            articlecategoryid: res.data.articlecategoryid,
-            articletitle: res.data.articletitle,
-            description: res.data.description,
-            price: res.data.price,
-            imageurl: res.data.imageurl,
-            articlestatusid: res.data.articlestatusid,
-            courseid: res.data.courseid,
-            locationid: res.data.locationid,
-            publicationstatusid: res.data.publicationstatusid,
-            salestatusid: res.data.salestatusid,
-          });
+      axios.get(HOST_SV + `/api/articles/${articleUpdateId}`).then((res) => {
+        //console.log("useEffect/res.data: ", res.data);
+        setUpdateArticle({
+          articlecategoryid: res.data.articlecategoryid,
+          articletitle: res.data.articletitle,
+          description: res.data.description,
+          price: res.data.price,
+          imageurl: res.data.imageurl,
+          articlestatusid: res.data.articlestatusid,
+          courseid: res.data.courseid,
+          locationid: res.data.locationid,
+          publicationstatusid: res.data.publicationstatusid,
+          salestatusid: res.data.salestatusid,
         });
+      });
     }
   }, [articleCategory.length, articleUpdateId]);
 
@@ -276,12 +262,11 @@ export function ArticleForm({ articleUpdateId = null }) {
                   //// Solo modificar la imágen si hay una nueva imágen para sustituir JSM 20220424
                   if (urlImg != "") {
                     console.log("onSubmit/PUT/urlImg/entra!");
-                    return axios.put(HOST_SV + `/api/articles/images`,
-                        {
-                          imageurl: urlImg,
-                          articleimageid: articleUpdateId,
-                        }
-                      )
+                    return axios
+                      .put(HOST_SV + `/api/articles/images`, {
+                        imageurl: urlImg,
+                        articleimageid: articleUpdateId,
+                      })
                       .then((res) => router.push("/"))
                       .catch((e) =>
                         console.error("onSubmit PUT image error: ", e)
@@ -413,7 +398,7 @@ export function ArticleForm({ articleUpdateId = null }) {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 flex flex-col">
               <input
                 type="file"
                 name="imageUrl"
