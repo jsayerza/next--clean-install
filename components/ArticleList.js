@@ -16,9 +16,9 @@ export default function ArticleList({ articles }) {
         .then(async (res) => {
           //await axios.delete("/api/articles/images/" + id);
           await axios.delete("/api/articles/images"),
-          {
-            articleimageid: id,
-          };
+            {
+              articleimageid: id,
+            };
           toast.success("Article eliminat");
           router.push("/");
         })
@@ -33,16 +33,16 @@ export default function ArticleList({ articles }) {
     <div className="flex gap-4 flex-col w-full justify-center">
       {articles.map((article) => (
         <div
-          className="flex justify-between items-center border-gray-200 border-b pb-2 px-2 gap-6 transition-all duration-200 hover:bg-white"
+          className="flex flex-col md:flex-row justify-center md:justify-between items-center border-gray-200 border-b pb-2 px-2 gap-6 transition-all duration-200 hover:bg-white"
           key={article.articleid}
         >
-          <div className="flex items-center">
+          <div className="flex flex-col md:flex-row md:items-center">
             <div className="rounded">
               {article && article.imageurl && (
                 <Image
                   src={article.imageurl}
-                  width={200}
-                  height={150}
+                  width={300}
+                  height={200}
                   objectFit="cover"
                   className="max-w-full h-auto rounded-lg transition-shadow ease-in-out shadow-none"
                   alt="image of the article"
