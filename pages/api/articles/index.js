@@ -27,6 +27,7 @@ const getArticles = async (req, res) => {
 
 const saveArticle = async (req, res) => {
   //console.log("saveArticle/req.body: ", req.body);
+  //articlesizeid
   const { articlecategoryid, salestatusid, articletitle, description, price, useremail, articlestatusid, courseid, locationid, publicationstatusid } = req.body;
 
   try {
