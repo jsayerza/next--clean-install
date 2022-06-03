@@ -5,7 +5,7 @@ import { Home } from "components/Home";
 
 function HomePage({ articles }) {
   return (
-    <Layout>
+    <Layout> 
       <Home articles={articles} />
     </Layout>
   );
